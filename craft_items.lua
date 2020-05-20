@@ -1,3 +1,5 @@
+dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
+
 --# Tools --------------------------------------------------#--
 
     --# Replace default items ----------------------------------#--
@@ -158,6 +160,11 @@
             elseif itemstack:get_name() == 'default:chest' then
 
                 itemstack:set_name('tmcraftings:woodchest')
+            
+            -- Bookshelf --
+            elseif itemstack:get_name() == 'default:bookshelf' then
+
+                itemstack:set_name('tmcraftings:bookshelf')
             end
         end)
 
@@ -676,7 +683,7 @@
         })
 
         -- Titanium Shovel --
-        minetest.register_tool("tmcraftings:titanium_shovel", {
+        minetest.register_tool('tmcraftings:titanium_shovel', {
 
             description = "Titanium Shovel",
             inventory_image = "tmcraftings_titanium_shovel.png",
@@ -715,7 +722,7 @@
         })
 
         -- Titanium axe --
-        minetest.register_tool("tmcraftings:titanium_axe", {
+        minetest.register_tool('tmcraftings:titanium_axe', {
 
             description = "Titanium Axe",
             inventory_image = "tmcraftings_titanium_axe.png",
@@ -754,7 +761,7 @@
         })
 
         -- Titanium sword --
-        minetest.register_tool("tmcraftings:titanium_sword", {
+        minetest.register_tool('tmcraftings:titanium_sword', {
 
             description = "Titanium Sword",
             inventory_image = "tmcraftings_titanium_sword.png",
@@ -791,6 +798,95 @@
                 {'default:stick'},
             },
         })
+
+-- # Special tools -----------------------------------------#--
+
+    -- Pickaxes --
+    minetest.register_tool('tmcraftings:nightmare', {
+        
+        description = "Nightmare",
+        inventory_image = "tmcraftings_loot_nightmare.png",
+
+        tool_capabilities = {
+
+            full_punch_interval = 1.0,
+            
+            max_drop_level = 0,
+            groupcaps = {
+
+                cracky = {
+
+                    times = {[2] = 2.2, [3] = 2.8, [4] = 3.2, [5] = 3.8},
+                    uses = 40,
+                    maxlevel = 5
+                },
+            },
+            
+            damage_groups = {fleshy = 5},
+        },
+        
+        sound = {breaks = "default_tool_breaks"},
+        groups = {pickaxe = 3}
+    })
+
+    minetest.register_tool('tmcraftings:forestgift', {
+        
+        description = "Forest Gift",
+        inventory_image = "tmcraftings_loot_forestgift.png",
+
+        tool_capabilities = {
+
+            full_punch_interval = 2.0,
+            
+            max_drop_level = 0,
+            groupcaps = {
+
+                cracky = {
+
+                    times = {[2] = 1.1, [3] = 1.9, [4] = 2.1, [5] = 2.9, [6] = 3.1, [7] = 16.0},
+                    uses = 10,
+                    maxlevel = 7
+                },
+            },
+            
+            damage_groups = {fleshy = 6},
+        },
+        
+        sound = {breaks = "default_tool_breaks"},
+        groups = {pickaxe = 5}
+    })
+
+    -- Swords --
+    minetest.register_tool('tmcraftings:theforge', {
+        
+        description = "The Forge",
+        inventory_image = "tmcraftings_loot_theforge.png",
+
+        tool_capabilities = {
+
+            full_punch_interval = 0.7,
+            max_drop_level = 1,
+
+            groupcaps = {
+
+                snappy = {
+
+                    times = {[1] = 2.7, [2] = 1.7, [3] = 0.7},
+                    uses = 40,
+                    maxlevel = 3
+                },
+            },
+
+            damage_groups = {fleshy = 7},
+        },
+        
+        sound = {breaks = "default_tool_breaks"},
+        groups = {sword = 4}
+    })
+
+    add_loot('tmcraftings:nightmare' )
+    add_loot('tmcraftings:forestgift')
+    add_loot('tmcraftings:theforge'  )
 
 --# Iron items ---------------------------------------------#--
     

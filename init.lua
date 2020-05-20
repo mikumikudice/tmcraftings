@@ -1,5 +1,5 @@
 -- Load default path --
-local path = minetest.get_modpath("tmcraftings")
+local path = minetest.get_modpath('tmcraftings')
 
 -- Execute files --
 dofile(path .. '/craft_forms.lua')

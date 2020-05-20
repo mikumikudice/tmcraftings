@@ -142,9 +142,7 @@ function is_diggable(pos)
     return inv:is_empty('fuel') and inv:is_empty('dst') and inv:is_empty('src')
 end
 
-function can_put_itm(pos, l_nm, indx, stck, char)
-
-    if minetest.is_protected(pos, char) then return 0 end
+function can_put_itm(pos, l_nm, indx, stck)
 
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
@@ -168,17 +166,16 @@ function can_put_itm(pos, l_nm, indx, stck, char)
     elseif l_nm == "dst" then return 0 end
 end
 
-function can_mov_itm(pos, from_list, f_idx, tolst, toidx, count, char)
+function can_mov_itm(pos, f_lst, f_idx, tolst, toidx, count)
 
     local meta = minetest.get_meta(pos)
     local inv  = meta:get_inventory()
-    local stck = inv:get_stack(from_list, f_idx)
+    local stck = inv:get_stack(f_lst, f_idx)
     
-    return can_put_itm(pos, tolst, toidx, stck, char)
+    return can_put_itm(pos, tolst, toidx, stck)
 end
 
-function can_tak_itm(pos, l_nm, indx, stck, char)
+function can_tak_itm(pos, l_nm, indx, stck)
 
-    if minetest.is_protected(pos, char:get_player_name()) then return 0 end
     return stck:get_count()
 end

@@ -90,7 +90,7 @@ function get_gui(name, item_pc, fuel_pc, data)
         size[8.5,8.5]
         ]]
 
-        .. "list[" .. (data or 'context') .. ";main;0.25,0.25;8,3;]"
+        .. "list[" .. (data or 'context;main') .. ";0.25,0.25;8,3;]"
         .. def_inv
 
     if name == 'dfurnace' then return dfr_gui end

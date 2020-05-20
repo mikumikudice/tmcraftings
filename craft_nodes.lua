@@ -1,5 +1,4 @@
 dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
-dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
 --# Fix default ores' generation ---------------------------#--
 
@@ -39,7 +38,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         y_min          = -31000,
     })
 
--- Ores --
+-- New ores --
 --# Iron ---------------------------------------------------#--
 
     minetest.register_craftitem('tmcraftings:iron', {
@@ -306,7 +305,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
     minetest.register_node('tmcraftings:stone_with_magic_crystal', {
 
-        description = "magic_crystal Ore",
+        description = "Magic Crystal Ore",
         drop = "tmcraftings:magic_crystal",
 
         tiles = {"default_stone.png^tmcraftings_magic_crystal_ore.png"},
@@ -689,7 +688,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
     })
 
     -- Replace crafting output item --
-    -- ./craft_items.lua (line 153) --
+    -- ./craft_items.lua (line 155) --
 
 --# Replace Chest ------------------------------------------#--
 
@@ -712,14 +711,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
     --# Behaviour scope ------------------------------------#--
 
-        can_dig =
-        function(pos)
-            
-            local meta = minetest.get_meta(pos)
-            local inv = meta:get_inventory()
-    
-            return inv:is_empty('main')
-        end,
+        can_dig = can_dig,
 
         on_construct = 
         function(pos)
@@ -727,8 +719,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             local meta = minetest.get_meta(pos)
             local inv = meta:get_inventory()
             inv:set_size('main', 8 * 3)
-
-            chests[pos] = false
         end,
 
         on_rightclick =
@@ -744,7 +734,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
                 }, true)
                 
-                chests[pos] = true
+                chests[pos] = 'tmcraftings:woodchest'
                 s_node(pos, 'tmcraftings:woodchest_open')
 
                 minetest.after(0.2,
@@ -754,7 +744,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
                     'tmcraftings:chestformspec',
                     
                     get_gui('defchest', _, _,
-                        'nodemeta:' .. pos.x .. "," .. pos.y .. "," .. pos.z)
+                        'nodemeta:' .. pos.x .. "," .. pos.y .. "," .. pos.z .. ';main')
                 )
             end
         end
@@ -780,18 +770,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         groups = {choppy = 2, oddly_breakable_by_hand = 2, not_in_creative_inventory = 1, chest = 1},
         sounds = default.node_sound_wood_defaults(),
 
-        can_dig =
-        function(pos)
-            
-            local meta = minetest.get_meta(pos)
-            local inv = meta:get_inventory()
-    
-            return inv:is_empty('main')
-        end
+        can_dig = can_dig
     })
 
     -- Replace crafting output item --
-    -- ./craft_items.lua (line 158) --
+    -- ./craft_items.lua (line 160) --
 
     -- Replace default chest in dungeons --
     minetest.register_abm({
@@ -819,13 +802,13 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             local loot = get_loot()
             local itms = {
 
-                [val1 % 8*3] = loot[val3%#loot],
-                [val2 % 8*3] = loot[val2%#loot],
-                [val3 % 8*3] = loot[val1%#loot],
+                [val1] = loot[val3%#loot],
+                [val2] = loot[val2%#loot],
+                [val3] = loot[val1%#loot],
 
-                [(val1 + 3) % 8*3] = loot[(val1 + 1)%#loot],
-                [(val2 + 2) % 8*3] = loot[(val2 + 2)%#loot],
-                [(val3 + 1) % 8*3] = loot[(val3 + 3)%#loot],
+                [val1 + 3] = loot[(val1 + 1)%#loot],
+                [val2 + 2] = loot[(val2 + 2)%#loot],
+                [val3 + 1] = loot[(val3 + 3)%#loot],
             }
 
             math.randomseed(val1 + val2 + val3)
@@ -837,19 +820,81 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
                 -- Add more items --
                 if (
 
-                    v ~= 'tmcraftings:iron_pick'   and
-                    v ~= 'tmcraftings:iron_shovel' and
-                    v ~= 'tmcraftings:wood_pick'
+                    minetest.get_item_group(v, 'pickaxe') ~= 0 and
+                    minetest.get_item_group(v, 'shovel' ) ~= 0 and
+                    minetest.get_item_group(v, 'axe'    ) ~= 0 and
+                    minetest.get_item_group(v, 'sword'  ) ~= 0
 
                 ) then d_itm:set_count(math.random(1, 5))
                 
                 -- Fix duplicated tools bug --
                 else d_itm:set_count(1) end
 
-                inv:set_stack('main', i, d_itm)
+                inv:set_stack('main', i % (8*3), d_itm)
             end
         end
     })
+
+--# Replace Bookshelf --------------------------------------#--
+
+    minetest.register_node('tmcraftings:bookshelf', {
+
+        description = "Bookshelf",
+
+        tiles = {
+            
+            "default_wood.png", "default_wood.png", 
+            "default_wood.png", "default_wood.png",
+            "default_wood.png", "default_bookshelf.png"
+        },
+
+        paramtype2 = "facedir",
+
+        is_ground_content = false,
+
+        groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
+        sounds = default.node_sound_wood_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        can_dig = can_dig,
+
+        on_construct =
+        function(pos)
+            
+            local meta = minetest.get_meta(pos)
+            meta:set_string('formspec', get_gui('defchest'))
+
+            local inv = meta:get_inventory()
+            inv:set_size('main', 8 * 3)
+        end,
+
+        allow_metadata_inventory_put =
+        function(pos, l_nm, indx, stck)
+
+            if minetest.get_item_group(stck:get_name(), 'book') ~= 0 then
+
+                return stck:get_count()
+            end
+
+            return 0
+        end,
+
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            default.get_inventory_drops(pos, 'main', drops)
+            drops[#drops+1] = "tmcraftings::bookshelf"
+
+            minetest.remove_node(pos)
+            return drops
+        end
+    })
+
+    -- Replace crafting output item --
+    -- ./craft_items.lua (line 165) --
 
 --# Metal Crate --------------------------------------------#--
 
@@ -866,8 +911,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 4},
 
+        groups = {cracky = 4},
         sounds = default.node_sound_metal_defaults(),
 
         on_construct =
@@ -1327,7 +1372,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
     carts = {}
 
     carts.railparams = {}
-    carts.modpath = minetest.get_modpath("carts")
+    carts.modpath = minetest.get_modpath('carts')
 
     carts.speed_max = 7
     carts.punch_speed_max = 5
@@ -1418,6 +1463,101 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             {'', 'tmcraftings:silver', ''},
             {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
             {'', 'tmcraftings:silver', ''},
+        },
+    })
+
+--# Enchanted Chest ----------------------------------------#--
+
+    minetest.register_node('tmcraftings:echest', {
+            
+        description = "Enchanted Chest",
+        
+        tiles = {
+
+            "tmcraftings_echest_top.png" , "tmcraftings_echest_bot.png" ,
+            "tmcraftings_echest_side.png^[transformFX", "tmcraftings_echest_side.png",
+            "tmcraftings_echest_back.png", "tmcraftings_echest_front.png"
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        paramtype = "light",
+        sunlight_propagates = false,
+        light_source = default.LIGHT_MAX / 5,
+
+        groups = {cracky = 6, chest = 2},
+        sounds = default.node_sound_stone_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        on_construct = 
+        function(pos)
+
+            chests[pos] = false
+        end,
+
+        on_rightclick =
+        function(pos, node, clicker)
+            
+            if can_opn(pos) then
+
+                minetest.sound_play('doors_steel_door_open', {
+
+                    gain = 0.3,
+                    pos = pos,
+                    max_hear_distance = 10
+
+                }, true)
+                
+                chests[pos] = 'tmcraftings:echest'
+                s_node(pos, 'tmcraftings:echest_open')
+
+                minetest.after(0.2,
+
+                    minetest.show_formspec,
+                    clicker:get_player_name(),
+                    'tmcraftings:chestformspec_enchanted',
+                    
+                    get_gui('defchest', _, _, 'current_player;chst')
+                )
+            end
+        end
+    })
+
+    minetest.register_node('tmcraftings:echest_open', {
+        
+        drawtype = "mesh",
+        mesh = "chest_open.obj",
+
+        tiles = {
+
+            "tmcraftings_echest_top.png"  , "tmcraftings_echest_bot.png" ,
+            "tmcraftings_echest_side.png" , "tmcraftings_echest_back.png",
+            "tmcraftings_echest_front.png", "tmcraftings_echest_inside.png"
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        drop = "tmcraftings:echest",
+
+        paramtype = "light",
+        sunlight_propagates = false,
+        light_source = default.LIGHT_MAX / 3,
+
+        groups = {cracky = 6, chest = 2},
+        sounds = default.node_sound_stone_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:echest',
+        recipe = {
+            
+            {'tmcraftings:titanium', 'group:wood', 'tmcraftings:titanium'},
+            {'group:wood', 'tmcraftings:magic_core', 'group:wood'},
+            {'tmcraftings:titanium', 'group:wood', 'tmcraftings:titanium'},
         },
     })
 

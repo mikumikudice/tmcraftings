@@ -13,9 +13,20 @@ function get_loot()
     return loot
 end
 
-function can_dig(pos, player)
+function add_loot(item)
+
+    table.insert(loot, item)
+end
+
+function can_dig(pos)
     
-    return minetest.get_meta(pos):get_inventory():is_empty('main')
+    local meta = minetest.get_meta(pos)
+    local inv  = meta:get_inventory()
+
+    local out = inv:is_empty('main')
+    
+    if out ~= nil then return out
+    else return true end
 end
 
 -- Code from original chest --
@@ -38,9 +49,9 @@ function can_opn(pos)
 end
 
 -- Based on original code --
-function close_chest()
+function close_chest(sound)
 
-    minetest.sound_play('default_chest_close', {
+    minetest.sound_play(sound or 'default_chest_close', {
 
         gain = 0.3,
         pos = pos,
@@ -54,8 +65,8 @@ function close_chest()
             
             minetest.after(0.2, function()
                 
-                s_node(i, 'tmcraftings:woodchest')
-                chests[i] = false
+                s_node(i, v)
+                chests[i] = nil
             end)
         end
     end
@@ -68,5 +79,9 @@ function(player, formname, fields)
     if formname == 'tmcraftings:chestformspec' then
 
         close_chest()
+    
+    elseif formname:sub(1, 17) == 'tmcraftings:chest' then
+        
+        close_chest('doors_steel_door_close')
     end
 end)
