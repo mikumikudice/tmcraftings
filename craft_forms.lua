@@ -9,11 +9,15 @@ local def_inv =
 minetest.register_on_joinplayer(function(player)
 
     local char = minetest.get_player_by_name(player:get_player_name())
+    local inv = char:get_inventory()
+    
+    -- Enchanted chest --
+    inv:set_size('chst', 8 * 3)
 
-    char:get_inventory():set_size('auxi', 3)
-    char:get_inventory():set_size('armo', 1)
+    inv:set_size('auxi', 3)
+    inv:set_size('armo', 1)
 
-    if not minetest.settings:get_bool("creative_mode") then
+    if not minetest.settings:get_bool('creative_mode') then
 
         char:set_inventory_formspec([[
             size[8.5,8.5]
@@ -34,17 +38,10 @@ minetest.register_on_joinplayer(function(player)
     end
 end)
 
-function get_gui(name, item_pc, fuel_pc, pos)
+function get_gui(name, item_pc, fuel_pc, data)
 
     local arrw = item_pc or 0
     local fire = fuel_pc or 0
-
-    -- Get formspec context by node position --
-    local npos
-    if pos then
-        
-        npos = pos.x .. "," .. pos.y .. "," .. pos.z
-    end
 
     local dfr_gui =
         
@@ -93,19 +90,10 @@ function get_gui(name, item_pc, fuel_pc, pos)
         size[8.5,8.5]
         ]]
 
-        .. "list[nodemeta:" .. (npos or '') .. ";main;0.25,0.25;8,3;]"
-        .. def_inv
-
-    local str_gui =
-
-        [[
-        size[8.5,8.5]
-        list[context;main;0.25,0.25;8,3;]
-        ]]
+        .. "list[" .. (data or 'context') .. ";main;0.25,0.25;8,3;]"
         .. def_inv
 
     if name == 'dfurnace' then return dfr_gui end
     if name == 'mfurnace' then return mfr_gui end
     if name == 'defchest' then return cht_gui end
-    if name == 'dstorage' then return str_gui end
 end

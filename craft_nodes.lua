@@ -751,7 +751,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
                     minetest.show_formspec,
 					clicker:get_player_name(),
-                    'tmcraftings:chestformspec', get_gui('defchest', _, _, pos)
+                    'tmcraftings:chestformspec',
+                    
+                    get_gui('defchest', _, _,
+                        'nodemeta:' .. pos.x .. "," .. pos.y .. "," .. pos.z)
                 )
             end
         end
@@ -871,7 +874,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         function(pos)
             
             local meta = minetest.get_meta(pos)
-            meta:set_string('formspec', get_gui('dstorage'))
+            meta:set_string('formspec', get_gui('defchest'))
 
             local inv = meta:get_inventory()
             inv:set_size('main', 8 * 3)
