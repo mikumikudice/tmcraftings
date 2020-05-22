@@ -398,7 +398,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
 --# Replace Obsidian ---------------------------------------#--
 
-    minetest.register_node('tmcraftings:obsidian', {
+    minetest.override_item('default:obsidian', {
 
         description = "Obsidian",
 
@@ -406,19 +406,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         groups = {cracky = 7},
         sounds = default.node_sound_stone_defaults(),
-    })
-
-    minetest.register_abm({
-
-        nodenames = {'default:obsidian'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-            
-            minetest.set_node(pos, {name = 'tmcraftings:obsidian'})
-        end
     })
 
 --# Replace bones ------------------------------------------#--
@@ -515,7 +502,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 -- Craftable nodes --
 --# Replace Furnace ----------------------------------------#--
 
-    minetest.register_node('tmcraftings:furnace', {
+    minetest.override_item('default:furnace', {
         
         description = "Furnace",
 
@@ -558,15 +545,27 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         on_metadata_inventory_move =
         function(pos)
 
-            s_node(pos, 'tmcraftings:furnace_on')
-            minetest.get_node_timer(pos):start(0.5)
+            local meta = minetest.get_meta(pos)
+            local inv  = meta:get_inventory()
+            
+            if not inv:get_stack('fuel', 1):is_empty() then
+
+                s_node(pos, 'default:furnace_active')
+                minetest.get_node_timer(pos):start(0.5)
+            end
         end,
         
         on_metadata_inventory_put =
         function(pos)
 
-            s_node(pos, 'tmcraftings:furnace_on')
-            minetest.get_node_timer(pos):start(0.5)
+            local meta = minetest.get_meta(pos)
+            local inv  = meta:get_inventory()
+            
+            if not inv:get_stack('fuel', 1):is_empty() then
+
+                s_node(pos, 'default:furnace_active')
+                minetest.get_node_timer(pos):start(0.5)
+            end
         end,
 
         -- What happens if furnace explodes --
@@ -592,7 +591,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         allow_metadata_inventory_take = can_tak_itm,
     })
 
-    minetest.register_node('tmcraftings:furnace_on', {
+    minetest.override_item('default:furnace_active', {
 
         tiles = {
 
@@ -617,7 +616,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
 
-        drop = 'tmcraftings:furnace',
+        drop = 'default:furnace',
 
         paramtype = "light",
         sunlight_propagates = false,
@@ -658,7 +657,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             default.get_inventory_drops(pos, 'fuel', drops)
 
             -- Drop itself --
-            drops[#drops + 1] = "tmcraftings:furnace"
+            drops[#drops + 1] = "default:furnace"
 
             minetest.remove_node(pos)
             return drops
@@ -669,30 +668,29 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         allow_metadata_inventory_take = can_tak_itm,
     })
 
+    -- Turn off --
     minetest.register_abm({
         
-        nodenames = {'tmcraftings:furnace_on'},
+        nodenames = {'default:furnace_active'},
         interval  = 1,
         chance    = 1,
         
         action =
         function(pos)
             
-            local meta = minetest.get_meta(pos
-        )
+            local meta = minetest.get_meta(pos)
+
             if meta:get_float('fire') <= 0 then
 
-                s_node(pos, 'tmcraftings:furnace')
+                s_node(pos, 'default:furnace')
+                meta:set_string('formspec', get_gui('dfurnace'))
             end
         end
     })
 
-    -- Replace crafting output item --
-    -- ./craft_items.lua (line 155) --
-
 --# Replace Chest ------------------------------------------#--
 
-    minetest.register_node('tmcraftings:woodchest', {
+    minetest.override_item('default:chest', {
         
         description = "Chest",
         
@@ -734,8 +732,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
                 }, true)
                 
-                chests[pos] = 'tmcraftings:woodchest'
-                s_node(pos, 'tmcraftings:woodchest_open')
+                chests[pos] = 'default:chest'
+                s_node(pos, 'default:chest_open')
 
                 minetest.after(0.2,
 
@@ -750,7 +748,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         end
     })
 
-    minetest.register_node('tmcraftings:woodchest_open', {
+    minetest.override_item('default:chest_open', {
         
         drawtype = "mesh",
         mesh = "chest_open.obj",
@@ -773,9 +771,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         can_dig = can_dig
     })
 
-    -- Replace crafting output item --
-    -- ./craft_items.lua (line 160) --
-
     -- Replace default chest in dungeons --
     minetest.register_abm({
 
@@ -785,9 +780,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         
         action =
         function(pos)
-            
-            -- Swap node --
-            s_node(pos, 'tmcraftings:woodchest')
 
             local meta = minetest.get_meta(pos)
             meta:set_string('infotext', 'loot')
@@ -837,7 +829,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
 --# Replace Bookshelf --------------------------------------#--
 
-    minetest.register_node('tmcraftings:bookshelf', {
+    minetest.override_item('default:bookshelf', {
 
         description = "Bookshelf",
 
@@ -892,9 +884,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             return drops
         end
     })
-
-    -- Replace crafting output item --
-    -- ./craft_items.lua (line 165) --
 
 --# Metal Crate --------------------------------------------#--
 

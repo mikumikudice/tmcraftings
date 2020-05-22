@@ -5,7 +5,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
     --# Replace default items ----------------------------------#--
 
         -- Wood pickaxe --
-        minetest.register_tool('tmcraftings:wood_pick', {
+        minetest.override_item('default:pick_wood', {
 
             description = "Wooden Pickaxe",
             inventory_image = "default_tool_woodpick.png",
@@ -32,15 +32,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             groups = {pickaxe = 1, flammable = 2}
         })
 
-        minetest.register_craft({
-
-            type = "fuel",
-            recipe = "tmcraftings:wood_pick",
-            burntime = 2,
-        })
-
         -- Wood shovel --
-        minetest.register_tool('tmcraftings:wood_shovel', {
+        minetest.override_item('default:shovel_wood', {
 
             description = "Wooden Shovel",
             inventory_image = "default_tool_woodshovel.png",
@@ -67,15 +60,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             groups = {shovel = 1}
         })
 
-        minetest.register_craft({
-
-            type = "fuel",
-            recipe = "tmcraftings:wood_shovel",
-            burntime = 2,
-        })
-
         -- Stone pickaxe --
-        minetest.register_tool('tmcraftings:stone_pick', {
+        minetest.override_item('default:pick_stone', {
 
             description = "Stone Pickaxe",
             inventory_image = "default_tool_stonepick.png",
@@ -103,7 +89,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         })
 
         -- Stone shovel --
-        minetest.register_tool('tmcraftings:stone_shovel', {
+        minetest.override_item('default:shovel_stone', {
 
             description = "Stone Shovel",
             inventory_image = "default_tool_stoneshovel.png",
@@ -129,44 +115,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             sound = {breaks = "default_tool_breaks"},
             groups = {shovel = 2}
         })
-
-        -- Replace crafting output item --
-        minetest.register_on_craft(function(itemstack)
-            
-            -- Wood --
-            if itemstack:get_name() == 'default:pick_wood' then
-                
-                itemstack:set_name('tmcraftings:wood_pick')
-            
-            elseif itemstack:get_name() == 'default:shovel_wood' then
-                
-                itemstack:set_name('tmcraftings:wood_shovel')
-
-            -- Stone --
-            elseif itemstack:get_name() == 'default:pick_stone' then
-            
-                itemstack:set_name('tmcraftings:stone_pick')
-
-            elseif itemstack:get_name() == 'default:shovel_stone' then
-
-                itemstack:set_name('tmcraftings:stone_shovel')
-
-            -- Furnace --
-            elseif itemstack:get_name() == 'default:furnace' then
-
-                itemstack:set_name('tmcraftings:furnace')
-            
-            -- Chest --
-            elseif itemstack:get_name() == 'default:chest' then
-
-                itemstack:set_name('tmcraftings:woodchest')
-            
-            -- Bookshelf --
-            elseif itemstack:get_name() == 'default:bookshelf' then
-
-                itemstack:set_name('tmcraftings:bookshelf')
-            end
-        end)
 
     --# Full stone ---------------------------------------------#--
 
