@@ -5,6 +5,7 @@ See license.txt for license information.
 Authors of source code
 ----------------------
 Pixet Bits (MIT)
+ All code except indicated parts from original code (Minetest Game)
 Various Minetest developers and contributors (MIT)
 
 Authors of media (textures)
