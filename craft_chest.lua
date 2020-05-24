@@ -5,7 +5,8 @@ local loot = {
                 
     'tmcraftings:iron', 'tmcraftings:iron_pick', 'tmcraftings:iron_shovel'  ,
     'default:cobble'  , 'default:coal_lump'    , 'tmcraftings:magic_crystal',
-    'default:wood'    , 'default:stick'        , 'tmcraftings:wood_pick'    ,
+    'default:wood'    , 'default:stick'        , 'default:pick_wood'        ,
+    'farming:string'  , 'farming:wheat'        ,
 }
 
 function get_loot()

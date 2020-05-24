@@ -548,7 +548,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             local meta = minetest.get_meta(pos)
             local inv  = meta:get_inventory()
             
-            if not inv:get_stack('fuel', 1):is_empty() then
+            if not inv:get_stack('fuel', 1):is_empty()
+            or meta:get_float('fire') > 0 then
 
                 s_node(pos, 'default:furnace_active')
                 minetest.get_node_timer(pos):start(0.5)
@@ -561,7 +562,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             local meta = minetest.get_meta(pos)
             local inv  = meta:get_inventory()
             
-            if not inv:get_stack('fuel', 1):is_empty() then
+            if not inv:get_stack('fuel', 1):is_empty()
+            or meta:get_float('fire') > 0 then
 
                 s_node(pos, 'default:furnace_active')
                 minetest.get_node_timer(pos):start(0.5)
@@ -715,13 +717,17 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         function(pos)
             
             local meta = minetest.get_meta(pos)
-            local inv = meta:get_inventory()
+            local inv  = meta:get_inventory()
+            
             inv:set_size('main', 8 * 3)
         end,
 
         on_rightclick =
         function(pos, node, clicker)
             
+            -- Trigger loot --
+            minetest.get_meta(pos):set_string('open', 'true')
+
             if can_opn(pos) then
 
                 minetest.sound_play('default_chest_open', {
@@ -771,61 +777,89 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         can_dig = can_dig
     })
 
-    -- Replace default chest in dungeons --
-    minetest.register_abm({
+    local found_chest = {}
 
-        nodenames = {"default:chest"},
-        interval  = 1,
-        chance    = 1,
+    -- Replace default function do add a callback --
+    core.add_node =
+    function(pos, node)
         
-        action =
-        function(pos)
+        -- Store chests' data --
+        if node.name == 'default:chest' then
 
-            local meta = minetest.get_meta(pos)
-            meta:set_string('infotext', 'loot')
+            -- Active trigger --
+            table.insert(found_chest, {
 
-            local inv = meta:get_inventory()
-            inv:set_list('main', {})
-
-            local d_itm = inv:get_stack('main', 1)
-
-            local val1, val2, val3 = math.abs(pos.x), math.abs(pos.y), math.abs(pos.z)
-
-            local loot = get_loot()
-            local itms = {
-
-                [val1] = loot[val3%#loot],
-                [val2] = loot[val2%#loot],
-                [val3] = loot[val1%#loot],
-
-                [val1 + 3] = loot[(val1 + 1)%#loot],
-                [val2 + 2] = loot[(val2 + 2)%#loot],
-                [val3 + 1] = loot[(val3 + 3)%#loot],
-            }
-
-            math.randomseed(val1 + val2 + val3)
-
-            for i, v in pairs(itms) do
-
-                d_itm:set_name(v)
-
-                -- Add more items --
-                if (
-
-                    minetest.get_item_group(v, 'pickaxe') ~= 0 and
-                    minetest.get_item_group(v, 'shovel' ) ~= 0 and
-                    minetest.get_item_group(v, 'axe'    ) ~= 0 and
-                    minetest.get_item_group(v, 'sword'  ) ~= 0
-
-                ) then d_itm:set_count(math.random(1, 5))
+                ['found'] = true,
+                ['pos']   = {
                 
-                -- Fix duplicated tools bug --
-                else d_itm:set_count(1) end
+                    ['x'] = pos.x,
+                    ['y'] = pos.y,
+                    ['z'] = pos.z,
+                }
+            })
+        end
 
-                inv:set_stack('main', i % (8*3), d_itm)
+        minetest.set_node(pos, node)
+    end
+
+    -- Replace loot --
+    minetest.register_on_generated(function()
+
+        for i, v in pairs(found_chest) do
+
+            if v.found then
+
+                local meta = minetest.get_meta(v.pos)
+                local inv = meta:get_inventory()
+
+                meta:set_string('infotext', 'loot')
+
+                -- Disable trigger --
+                found_chest[i] = nil
+                
+                -- Get max slot index --
+                local size = inv:get_size('main')
+
+                -- Clear inventory --
+                inv:set_list('main', {})
+
+                local val1, val2, val3 = math.abs(v.pos.x), math.abs(v.pos.y), math.abs(v.pos.z)
+                math.randomseed(val1 + val2 + val3)
+
+                local loot = get_loot()
+                local itms = {
+
+                    [math.random(0, size)] = loot[val3%#loot],
+                    [math.random(0, size)] = loot[val2%#loot],
+                    [math.random(0, size)] = loot[val1%#loot],
+
+                    [math.random(0, size)] = loot[(val1 + 1)%#loot],
+                    [math.random(0, size)] = loot[(val2 + 2)%#loot],
+                    [math.random(0, size)] = loot[(val3 + 3)%#loot],
+                }
+
+                for i, v in pairs(itms) do
+
+                    local d_itm = ItemStack({name = v})
+
+                    -- Add more items --
+                    if (
+
+                        minetest.get_item_group(v, 'pickaxe') ~= 0 and
+                        minetest.get_item_group(v, 'shovel' ) ~= 0 and
+                        minetest.get_item_group(v, 'axe'    ) ~= 0 and
+                        minetest.get_item_group(v, 'sword'  ) ~= 0
+
+                    ) then d_itm:set_count(math.random(1, 5))
+                    
+                    -- Fix duplicated tools bug --
+                    else d_itm:set_count(1) end
+
+                    inv:set_stack('main', i, d_itm)
+                end
             end
         end
-    })
+    end)
 
 --# Replace Bookshelf --------------------------------------#--
 
