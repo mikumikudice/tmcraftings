@@ -84,7 +84,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         function(pos)
             
             minetest.set_node(pos, {name = "tmcraftings:stone_with_iron"})
-        end,
+        end
     })
 
 --# Tungsten -----------------------------------------------#--
@@ -144,7 +144,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         function(pos)
             
             minetest.set_node(pos, {name = "tmcraftings:stone_with_tungsten"})
-        end,
+        end
     })
 
 --# Titanium -----------------------------------------------#--
@@ -779,7 +779,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     local found_chest = {}
 
-    -- Replace default function do add a callback --
+    -- Replace default function to add an callback --
     core.add_node =
     function(pos, node)
         
