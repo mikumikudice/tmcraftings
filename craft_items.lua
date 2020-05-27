@@ -844,101 +844,35 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
         output = "bucket:bucket_empty",
         recipe = {
 
-            {"tmcraftings:iron", "", "tmcraftings:iron"},
-            {"", "tmcraftings:iron", ""},
+            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+            {"tmcraftings:iron", "tmcraftings:iron", "tmcraftings:iron"},
         }
     })
 
-    --[[
-    -- Replace bucket --
-    minetest.register_craftitem('tmcraftings:bucket_empty', {
+    -- Rails --
+    minetest.register_craft({
 
-        description = "Empty Bucket",
+        output = "carts:rail 16",
 
-        inventory_image = "tmcraftings_bucket_empty.png",
+        recipe = {
 
-        groups = {tool = 1},
-        liquids_pointable = true,
-
-        -- Code from original bucket mod --
-        on_use =
-        function(itemstack, user, pnt_tng)
-
-            if pnt_tng.type == "object" then
-
-                pnt_tng.ref:punch(user, 1.0, {full_punch_interval = 1.0}, nil)
-                return user:get_wielded_item()
-            
-            -- do nothing if it's neither object nor node --
-            elseif pnt_tng.type ~= "node" then return end
-
-            -- Check if pointing to a liquid source
-            local node = minetest.get_node(pnt_tng.under)
-
-            local l_def = bucket.liquids[node.name]
-            local i_cnt = user:get_wielded_item():get_count()
-    
-            if l_def ~= nil and l_def.itemname ~= nil and node.name == l_def.source then
-
-                if check_protection(pnt_tng.under,
-                    user:get_player_name(),
-                    'take ' .. node.name)
-                then return end
-    
-                -- default set to return filled bucket --
-                local gv_bk = l_def.itemname
-    
-                -- check if holding more than 1 empty bucket --
-                if i_cnt > 1 then
-    
-                    -- if space in inventory add filled bucked, otherwise drop as item
-                    local inv = user:get_inventory()
-
-                    if inv:room_for_item('main', {name = l_def.itemname}) then
-
-                        inv:add_item('main', l_def.itemname)
-
-                    else
-
-                        local pos = user:get_pos()
-
-                        pos.y = math.floor(pos.y + 0.5)
-                        minetest.add_item(pos, l_def.itemname)
-                    end
-    
-                    -- set to return empty buckets minus 1 --
-                    gv_bk = 'tmcraftings:bucket_empty ' .. tostring(i_cnt-1)
-                end
-    
-                -- force_renew requires a source neighbour --
-                local src_n = false
-
-                if l_def.force_renew then
-
-                    src_n = minetest.find_node_near(pnt_tng.under, 1, l_def.source)
-                end
-
-                if not (src_n and l_def.force_renew) then
-
-                    minetest.add_node(pnt_tng.under, {name = "air"})
-                end
-    
-                return ItemStack(gv_bk)
-
-            else
-                -- non-liquid nodes will have their on_punch triggered --
-                local node_def = minetest.registered_nodes[node.name]
-
-                if node_def then
-
-                    node_def.on_punch(pnt_tng.under, node, user, pnt_tng)
-                end
-
-                return user:get_wielded_item()
-            end
-        end
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+            {"tmcraftings:iron", ""                      , "tmcraftings:iron"},
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+        }
     })
-    ]]--
+
+    minetest.register_craft({
+
+        output = "carts:brakerail 16",
+
+        recipe = {
+
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+            {"tmcraftings:iron", "default:coal_lump"     , "tmcraftings:iron"},
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+        }
+    })
 
 --# miscellaneous ------------------------------------------#--
 

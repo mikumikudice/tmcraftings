@@ -1392,17 +1392,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 --# Magic rail ---------------------------------------------#--
 
     -- Use default rail API --
-    carts = {}
-
-    carts.railparams = {}
-    carts.modpath = minetest.get_modpath('carts')
-
-    carts.speed_max = 7
-    carts.punch_speed_max = 5
-    carts.path_distance_max = 3
-
-    dofile(carts.modpath .. "/functions.lua")
-
     carts:register_rail('tmcraftings:mrail', {
 
         drop = 'tmcraftings:mrail_off',
@@ -1415,7 +1404,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         
         groups = carts:get_rail_groups(),
 
-    }, {acceleration = 20})
+    }, {acceleration = 6})
 
     carts:register_rail('tmcraftings:mrail_off', {
 
@@ -1430,18 +1419,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         groups = carts:get_rail_groups(),
 
-    })
-
-    minetest.register_craft({
-
-        output = "tmcraftings:mrail_off 16",
-
-        recipe = {
-
-            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
-            {"tmcraftings:iron", "tmcraftings:magic_core", "tmcraftings:iron"},
-            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
-        }
     })
 
     -- Turn on --
@@ -1480,13 +1457,14 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.register_craft({
 
-        output = 'tmcraftings:magic_postlight_off',
+        output = "tmcraftings:mrail_off 16",
+
         recipe = {
-            
-            {'', 'tmcraftings:silver', ''},
-            {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
-            {'', 'tmcraftings:silver', ''},
-        },
+
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+            {"tmcraftings:iron", "tmcraftings:magic_core", "tmcraftings:iron"},
+            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
+        }
     })
 
 --# Enchanted Chest ----------------------------------------#--
