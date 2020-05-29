@@ -960,6 +960,8 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         stack_max = 99
     })
 
+    add_loot('tmcraftings:leather')
+
     local tyers = {
 
         [1] = 'iron',
