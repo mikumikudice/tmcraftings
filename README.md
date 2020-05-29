@@ -3,7 +3,7 @@ Copyright (C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
 
 Current version: 1.5
 
-<img src= "https://github.com/PixetBits/tmcraftings/edit/master/screenshot.png">
+<img src= "screenshot.png">
 
 ### 1.5 Update news
 
