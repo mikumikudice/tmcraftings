@@ -1,4 +1,4 @@
-dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
+dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
 --# Tools --------------------------------------------------#--
 
@@ -77,11 +77,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
                         times = {[2] = 3.0, [3] = 3.5, [4] = 4.0},
                         uses = 20,
-                        maxlevel = 3
+                        maxlevel = 4
                     },
                 },
                 
-                damage_groups = {fleshy = 3},
+                damage_groups = {fleshy = 4},
             },
             
             sound = {breaks = "default_tool_breaks"},
@@ -135,7 +135,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
 
                         times = {[2] = 3.0, [3] = 3.5, [4] = 4.0},
                         uses = 25,
-                        maxlevel = 3
+                        maxlevel = 4
                     },
                 },
                 
@@ -873,6 +873,162 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_chest.lua')
             {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
         }
     })
+
+    -- Ledder --
+    minetest.register_node('tmcraftings:iron_ladder', {
+
+        description = "Iron Ladder",
+
+        drawtype = "signlike",
+        tiles = {"tmcraftings_iron_ladder.png"},
+        inventory_image = "tmcraftings_iron_ladder.png",
+        wield_image = "tmcraftings_iron_ladder.png",
+
+        paramtype = "light",
+        paramtype2 = "wallmounted",
+        sunlight_propagates = true,
+        is_ground_content = false,
+
+        walkable = false,
+        climbable = true,
+
+        selection_box = {type = "wallmounted"},
+
+        groups = {cracky = 4},
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:iron_ladder",
+
+        recipe = {
+
+            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+            {"tmcraftings:iron", "tmcraftings:iron", "tmcraftings:iron"},
+            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+        }
+    })
+
+--# Armors -------------------------------------------------#--
+
+    -- Hammer --
+    minetest.register_tool('tmcraftings:hammer', {
+
+        description = "Forge Hammer",
+        inventory_image = "tmcraftings_hammer.png",
+
+        tool_capabilities = {
+
+            full_punch_interval = 2.8,
+            max_drop_level = 2,
+
+            groupcaps = {
+
+                snappy = {
+                    
+                    times = {[1] = 3.5, [2] = 2.50},
+                    uses = 30,
+                    maxlevel = 2
+                },
+            },
+
+            damage_groups = {fleshy = 8},
+        },
+        
+        sound = {breaks = "default_tool_breaks"},
+        groups = {forge_hammer = 1}
+    })
+
+    minetest.register_craft({
+        
+        output = "tmcraftings:hammer",
+
+        recipe = {
+
+            {"tmcraftings:iron", "tmcraftings:iron", ""},
+            {"tmcraftings:iron", "group:wood"      , ""},
+            {""                , "group:wood"      , ""},
+        }
+    })
+
+    -- leather --
+    minetest.register_craftitem('tmcraftings:leather', {
+        
+        description = "Leather",
+        inventory_image = "tmcraftings_leather.png",
+        stack_max = 99
+    })
+
+    local tyers = {
+
+        [1] = 'iron',
+        [3] = 'tungsten',
+        [5] = 'titanium',
+    }
+
+    -- Register Metal Pieces and Armors --
+    for tyer, name in pairs(tyers) do
+
+        local show_name =
+        name:sub(1, 1):upper() .. name:sub(2)
+
+        -- Armor piece --
+        minetest.register_craftitem('tmcraftings:' .. name .. '_piece', {
+        
+            description = show_name .. " Armor Piece",
+            inventory_image = "tmcraftings_" .. name .. "_piece.png",
+            stack_max = 18,
+
+            groups = {armor_piece = tyer}
+        })
+
+        minetest.register_craft({
+
+            output = "tmcraftings:" .. name .. "_piece",
+
+            recipe = {
+
+                {"tmcraftings:" .. name, "tmcraftings:" .. name, "tmcraftings:" .. name},
+                {"tmcraftings:" .. name, ""                    , "tmcraftings:" .. name},
+                {""                    , "tmcraftings:" .. name, ""                    },
+            }
+        })
+
+        -- Armor --
+        minetest.register_craftitem('tmcraftings:' .. name .. '_armor', {
+        
+            description = show_name .. " Armor",
+            inventory_image = "tmcraftings_" .. name .. "_armor.png",
+            stack_max = 1,
+
+            groups = {armor = tyer}
+        })
+
+        minetest.register_craft({
+
+            output = "tmcraftings:" .. name .. "_armor",
+
+            recipe = {
+
+                {"tmcraftings:" .. name .. "_piece", 
+                "tmcraftings:" .. name .. "_piece" ,
+                "tmcraftings:" .. name .. "_piece"},
+
+                {"tmcraftings:" .. name .. "_piece",
+                "tmcraftings:leather"              ,
+                "tmcraftings:" .. name .. "_piece"},
+
+                {"tmcraftings:leather"            ,
+                "tmcraftings:" .. name .. "_piece",
+                "tmcraftings:leather"            },
+                {"tmcraftings:hammer", "", ""}
+            },
+        })
+
+        add_loot('tmcraftings:' .. name .. '_piece')
+        add_loot('tmcraftings:' .. name .. '_armor')
+    end
 
 --# miscellaneous ------------------------------------------#--
 

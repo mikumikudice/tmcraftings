@@ -2,6 +2,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
 --# Fix default ores' generation ---------------------------#--
 
+    -- Coal --
     minetest.register_ore({
 
         ore_type       = "scatter",
@@ -14,6 +15,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         y_min          = -30000,
     })
 
+    -- Iron --
     minetest.register_ore({
 
         ore_type       = "scatter",
@@ -26,6 +28,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         y_min          = -200,
     })
 
+    -- Less iron --
     minetest.register_ore({
 
         ore_type       = "scatter",
@@ -523,7 +526,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     --# Behaviour scope ------------------------------------#--
 
-        can_dig = is_diggable,
+        can_dig  = is_diggable,
+        on_timer = function() return end,
         
         on_construct =
         function(pos)
@@ -631,7 +635,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     --# Behaviour scope ------------------------------------#--
 
-        can_dig = is_diggable,
+        can_dig  = is_diggable,
         on_timer = default_timer,
 
         -- Start working on inventory event --
@@ -777,90 +781,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         can_dig = can_dig
     })
 
-    local found_chest = {}
-
-    -- Replace default function to add an callback --
-    core.add_node =
-    function(pos, node)
-        
-        -- Store chests' data --
-        if node.name == 'default:chest' then
-
-            -- Active trigger --
-            table.insert(found_chest, {
-
-                ['found'] = true,
-                ['pos']   = {
-                
-                    ['x'] = pos.x,
-                    ['y'] = pos.y,
-                    ['z'] = pos.z,
-                }
-            })
-        end
-
-        minetest.set_node(pos, node)
-    end
-
-    -- Replace loot --
-    minetest.register_on_generated(function()
-
-        for i, v in pairs(found_chest) do
-
-            if v.found then
-
-                local meta = minetest.get_meta(v.pos)
-                local inv = meta:get_inventory()
-
-                meta:set_string('infotext', 'loot')
-
-                -- Disable trigger --
-                found_chest[i] = nil
-                
-                -- Get max slot index --
-                local size = inv:get_size('main')
-
-                -- Clear inventory --
-                inv:set_list('main', {})
-
-                local val1, val2, val3 = math.abs(v.pos.x), math.abs(v.pos.y), math.abs(v.pos.z)
-                math.randomseed(val1 + val2 + val3)
-
-                local loot = get_loot()
-                local itms = {
-
-                    [math.random(0, size)] = loot[val3%#loot],
-                    [math.random(0, size)] = loot[val2%#loot],
-                    [math.random(0, size)] = loot[val1%#loot],
-
-                    [math.random(0, size)] = loot[(val1 + 1)%#loot],
-                    [math.random(0, size)] = loot[(val2 + 2)%#loot],
-                    [math.random(0, size)] = loot[(val3 + 3)%#loot],
-                }
-
-                for i, v in pairs(itms) do
-
-                    local d_itm = ItemStack({name = v})
-
-                    -- Add more items --
-                    if (
-
-                        minetest.get_item_group(v, 'pickaxe') ~= 0 and
-                        minetest.get_item_group(v, 'shovel' ) ~= 0 and
-                        minetest.get_item_group(v, 'axe'    ) ~= 0 and
-                        minetest.get_item_group(v, 'sword'  ) ~= 0
-
-                    ) then d_itm:set_count(math.random(1, 5))
-                    
-                    -- Fix duplicated tools bug --
-                    else d_itm:set_count(1) end
-
-                    inv:set_stack('main', i, d_itm)
-                end
-            end
-        end
-    end)
-
 --# Replace Bookshelf --------------------------------------#--
 
     minetest.override_item('default:bookshelf', {
@@ -892,7 +812,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             meta:set_string('formspec', get_gui('defchest'))
 
             local inv = meta:get_inventory()
-            inv:set_size('main', 8 * 3)
+            inv:set_size('main', 8 * 2)
         end,
 
         allow_metadata_inventory_put =
@@ -912,11 +832,73 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             local drops = {}
 
             default.get_inventory_drops(pos, 'main', drops)
-            drops[#drops+1] = "tmcraftings::bookshelf"
+            drops[#drops+1] = "default:bookshelf"
 
             minetest.remove_node(pos)
             return drops
         end
+    })
+
+--# Replace Vessels shelf ----------------------------------#--
+
+    minetest.override_item('vessels:shelf', {
+
+        description = "Bookshelf",
+
+        tiles = {
+            
+            "default_wood.png", "default_wood.png", 
+            "default_wood.png", "default_wood.png",
+            "default_wood.png", "vessels_shelf.png"
+        },
+
+        paramtype2 = "facedir",
+
+        is_ground_content = false,
+
+        groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
+        sounds = default.node_sound_wood_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        can_dig = can_dig,
+
+        on_construct =
+        function(pos)
+            
+            local meta = minetest.get_meta(pos)
+            meta:set_string('formspec', get_gui('defchest'))
+
+            local inv = meta:get_inventory()
+            inv:set_size('main', 8 * 2)
+        end,
+
+        allow_metadata_inventory_put =
+        function(pos, l_nm, indx, stck)
+
+            if minetest.get_item_group(stck:get_name(), 'vessel') ~= 0 then
+
+                return stck:get_count()
+            end
+
+            return 0
+        end,
+
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            default.get_inventory_drops(pos, 'main', drops)
+            drops[#drops+1] = "vessels:shelf"
+
+            minetest.remove_node(pos)
+            return drops
+        end,
+
+        on_metadata_inventory_put  = function() return end,
+        on_metadata_inventory_move = function() return end,
+        on_metadata_inventory_take = function() return end
     })
 
 --# Metal Crate --------------------------------------------#--
@@ -958,6 +940,62 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             {'tmcraftings:iron', ''                , 'tmcraftings:iron'},
             {'tmcraftings:iron', 'tmcraftings:iron', 'tmcraftings:iron'},
         },
+    })
+
+--# Anvil --------------------------------------------------#--
+
+    minetest.register_node('tmcraftings:anvil', {
+
+        description = "Anvil",
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Head --
+                {0.5, 0.5, 0.5, -0.5, 0.125, -0.5},
+
+                -- Boddy --
+                {0.2, 0.125, 0.3, -0.2, -0.31445, -0.125},
+
+                -- Decor --
+                {0.05555, 0.125, -0.125, -0.05555, 0.004, -0.25},
+                {0.05555, 0.125, -0.25, -0.05555, 0.065, -0.314},
+
+                -- Base --
+                {0.425, -0.31445, 0.5, -0.425, -0.5, -0.425},
+            },
+        },
+
+        tiles = {
+            
+            "tmcraftings_anvil_top.png" , "tmcraftings_anvil_bot.png" ,
+            "tmcraftings_anvil_side.png^[transformFX", "tmcraftings_anvil_side.png",
+            "tmcraftings_anvil_back.png", "tmcraftings_anvil_frnt.png",
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        groups = {cracky = 4},
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        on_construct =
+        function(pos)
+            
+            local meta = minetest.get_meta(pos)
+            meta:set_string('formspec', get_gui('defanvil'))
+        end,
+
+        on_rightclick =
+        function(pos)
+            
+            local meta = minetest.get_meta(pos)
+            meta:set_string('formspec', get_gui('defanvil'))
+        end
     })
 
 --# Compact resources --------------------------------------#--
@@ -1520,7 +1558,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                     clicker:get_player_name(),
                     'tmcraftings:chestformspec_enchanted',
                     
-                    get_gui('defchest', _, _, 'current_player;chst')
+                    get_gui('defchest', _, _, 'current_player;chest')
                 )
             end
         end
@@ -1530,6 +1568,12 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         
         drawtype = "mesh",
         mesh = "chest_open.obj",
+
+        selection_box = {
+
+            type = "fixed",
+            fixed = {-1/2, -1/2, -1/2, 1/2, 3/16, 1/2},
+        },
 
         tiles = {
 
