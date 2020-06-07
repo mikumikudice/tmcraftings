@@ -1,7 +1,7 @@
 # Wiki de referência do mod Too Many Craftings
 
 ## Instalação
-Baixe o arquivo do mob (tmcraftings - master.zip) e descompacte a pasta. Deixe-a com o nome "tmcraftings"<br/>
+Baixe o arquivo do mod (tmcraftings - master.zip) e descompacte a pasta. Deixe-a com o nome "tmcraftings"<br/>
 e coloque no diretório de mods do jogo. [[Ajuda para instalação.](https://dev.minetest.net/Installing_Mods#:~:text=The%20mods%20are%20installed%20globally,in%20globally%20installed%20Minetest%20versions)]
 
 ### AVISO: Ative o mod nas configurações de mundo antes de abri-lo pela primeira vez.<br/>Caso contrário, a geração de mundo e de loot não serão efetuadas.
@@ -156,6 +156,14 @@ Receita:
     _Fe/Ag__ __dust__ _Fe/Ag__
     titanium titanium titanium
 
+## Painel Solar
+Gera sinal mágico durante o dia. Exibe o horário atual ao apontar.<br/>
+Receita:
+
+    gold_ gold_ gold_
+    Fe/Ag clock Fe/Ag
+    Fe/Ag Fe/Ag Fe/Ag
+
 ## Tic-Tac Mágico
 Gera um sinal mágico a cada 2 segundo por 1 segundo.<br/>
 Receita:
@@ -179,6 +187,13 @@ Receita:
     Fe/Ag dust_ Fe/Ag
     Fe/Ag dust_ Fe/Ag
     Fe/Ag dust_ Fe/Ag
+
+## Poste de Luz Mágico
+Receita:
+
+    _______ _Fe/Ag_ _______
+    _glass_ crystal _glass_
+    _______ _Fe/Ag_ _______
 
 ## Pensador
 Funciona como porta lógica (AND, NAND, OR e XOR). Troca de função ao clicar. Exibe função atual ao apontar.<br/>
@@ -212,15 +227,7 @@ Receita:
     ruby_ dust_ dust_
     Fe/Ag Fe/Ag Fe/Ag
     
-## Painel Solar
-Gera sinal mágico durante o dia. Exibe o horário atual ao apontar.<br/>
-Receita:
-
-    gold_ gold_ gold_
-    Fe/Ag clock Fe/Ag
-    Fe/Ag Fe/Ag Fe/Ag
-
-# Fornálha Mágica
+## Fornálha Mágica
 Cozinha itens sem combustível.<br/>
 Receita:
 
@@ -228,3 +235,10 @@ Receita:
     _Fe/Ag__ __core__ _Fe/Ag__
     titanium titanium titanium
     
+## Baú Encantado
+Cria um inventário exclusivo pra cada jogador que interage. Não perde o conteúdo ao ser destruído.<br/>
+Receita:
+
+    titanium titanium titanium
+    titanium crystal_ titanium
+    titanium titanium titanium
