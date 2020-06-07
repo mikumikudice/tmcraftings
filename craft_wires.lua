@@ -64,6 +64,13 @@ end
             if minetest.find_node_near(pos, 2, "group:deliver") then
 
                 local pdir   = minetest.facedir_to_pos(node.param2)
+
+                if not pdir then
+                    
+                    minetest.chat_send_all(tostring(node.param2))
+                    return nil
+                end
+
                 local tp_pos = sum_pos(pos, pdir)
                 local ab_pos = sum_pos(tp_pos, pdir)
 

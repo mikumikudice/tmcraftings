@@ -2037,7 +2037,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             'tmcraftings_silver_block.png^tmcraftings_component.png' ,
 
             'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
-            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png.png',
 
             'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
             'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
@@ -2536,12 +2536,12 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.register_craft({
 
-        output = "tmcraftings:magic_postlight",
+        output = 'tmcraftings:magic_postlight_off',
         recipe = {
             
-            {""             , "group:tech_material"      , ""             },
-            {"default:glass", "tmcraftings:magic_crystal", "default:glass"},
-            {""             , "group:tech_material"      , ""             },
+            {'', 'tmcraftings:silver', ''},
+            {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
+            {'', 'tmcraftings:silver', ''},
         },
     })
 
