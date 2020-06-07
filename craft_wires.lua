@@ -127,7 +127,7 @@ end
                     local pdir      = minetest.facedir_to_pos(node.param2)
                     local self_part = sub_pos(pos, pdir)
                     
-                    minetest.s_node(pos, 'tmcraftings:piston')
+                    s_node(pos, 'tmcraftings:piston')
                     minetest.set_node(self_part, {name = 'air'})
                 end
             end
@@ -646,9 +646,9 @@ end
 
                 ['XOR']  = {
 
-                    ['on'] = not zp_door or not zm_door,
-                    ['io'] = not zp_door and zm_door   ,
-                    ['oi'] = zp_door and not zm_door   ,
+                    ['on'] = (not zp_door or not zm_door) and not (not zp_door and not zm_door),
+                    ['io'] = zp_door and zm_door        ,
+                    ['oi'] = not zp_door and not zm_door,
                 },
             }
 
