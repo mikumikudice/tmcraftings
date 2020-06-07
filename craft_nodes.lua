@@ -1235,6 +1235,17 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         end
     })
 
+    minetest.register_craft({
+
+        output = 'tmcraftings:tmcraftings:anvil',
+        recipe = {
+            
+            {'tmcraftings:iron_block', 'tmcraftings:iron_block', 'tmcraftings:iron_block'},
+            {'tmcraftings:iron'      , 'tmcraftings:iron'      , 'tmcraftings:iron'      },
+            {'tmcraftings:iron'      , 'tmcraftings:iron'      , 'tmcraftings:iron'      },
+        },
+    })
+
 --# Compact resources --------------------------------------#--
 
     -- Compressor behaviour --
@@ -1479,9 +1490,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = 'tmcraftings:magic_battery',
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-            {'tmcraftings:iron', 'tmcraftings:magic_core', 'tmcraftings:iron'},
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'},
+            {'group:tech_material', 'tmcraftings:magic_core', 'group:tech_material'},
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'},
         },
     })
 
@@ -1615,9 +1626,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:switch",
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:magic_crystal', 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'group:engine'             , 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:ruby'         , 'tmcraftings:silver'},
+            {"group:tech_material", "tmcraftings:magic_crystal", "group:tech_material"},
+            {"group:tech_material", "group:engine"             , "group:tech_material"},
+            {"group:tech_material", "tmcraftings:ruby"         , "group:tech_material"},
         },
     })
 
@@ -1767,12 +1778,12 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.register_craft({
 
-        output = 'tmcraftings:magic_boiler',
+        output = "tmcraftings:magic_boiler",
         recipe = {
             
-            {'tmcraftings:iron'    , 'tmcraftings:magic_dust'  , 'tmcraftings:iron'    },
-            {'tmcraftings:iron'    , 'tmcraftings:magic_dust'  , 'tmcraftings:iron'    },
-            {'tmcraftings:titanium', 'tmcraftings:titanium'    , 'tmcraftings:titanium'},
+            {"group:tech_material" , "tmcraftings:magic_dust"  , "group:tech_material" },
+            {"group:tech_material" , "tmcraftings:magic_dust"  , "group:tech_material" },
+            {"tmcraftings:titanium", "tmcraftings:titanium"    , "tmcraftings:titanium"},
         },
     })
 
@@ -1824,9 +1835,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:disperser",
         recipe = {
             
-            {"tmcraftings:silver", "tmcraftings:silver"    , "tmcraftings:silver"},
-            {"tmcraftings:silver", "tmcraftings:magic_core", "tmcraftings:silver"},
-            {"tmcraftings:silver", "tmcraftings:silver"    , "tmcraftings:silver"},
+            {"group:tech_material", "group:tech_material"     , "tmcraftings:silver"},
+            {"group:tech_material", "tmcraftings:magic_cystal", "tmcraftings:silver"},
+            {"group:tech_material", "group:tech_material"     , "tmcraftings:silver"},
         },
     })
 
@@ -1905,9 +1916,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:post 3",
         recipe = {
             
-            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
-            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
-            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
         },
     })
 
@@ -1949,13 +1960,14 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.register_craft({
 
-        output = "tmcraftings:wires 9",
+        type   = "shapeless",
+        output = "tmcraftings:wires 3",
 
         recipe = {
 
-            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
-            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
-            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+            "group:tech_material",
+            "group:tech_material",
+            "group:tech_material",
         }
     })
 
@@ -2080,9 +2092,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:thinker",
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:wcu'   , 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'group:tech_material', 'group:tech_material', 'group:tech_material'},
+            {'group:tech_material', 'tmcraftings:wcu'    , 'group:tech_material'},
+            {'group:tech_material', 'group:tech_material', 'group:tech_material'},
         },
     })
 
@@ -2135,9 +2147,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:inverser",
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'},
-            {'tmcraftings:ruby'  , 'tmcraftings:magic_core', 'tmcraftings:ruby'  },
-            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'},
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'},
+            {'tmcraftings:ruby'   , 'tmcraftings:magic_core', 'tmcraftings:ruby'   },
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'},
         },
     })
 
@@ -2188,9 +2200,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:magic_gate",
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'    },
-            {'tmcraftings:ruby'  , 'tmcraftings:magic_dust', 'tmcraftings:magic_dust'},
-            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'    },
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'   },
+            {'tmcraftings:ruby'   , 'tmcraftings:magic_dust', 'tmcraftings:magic_dust'},
+            {'group:tech_material', 'group:tech_material'   , 'group:tech_material'   },
         },
     })
 
@@ -2242,9 +2254,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         output = "tmcraftings:magic_tic",
         recipe = {
             
-            {'tmcraftings:silver', 'tmcraftings:silver'      , 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:clock_engine', 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:silver'      , 'tmcraftings:silver'},
+            {'group:tech_material', 'group:tech_material'     , 'group:tech_material'},
+            {'group:tech_material', 'tmcraftings:clock_engine', 'group:tech_material'},
+            {'group:tech_material', 'group:tech_material'     , 'group:tech_material'},
         },
     })
 

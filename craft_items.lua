@@ -1115,9 +1115,9 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         output = 'tmcraftings:magic_core',
         recipe = {
             
-            {''                  , 'tmcraftings:silver'       , ''                  },
-            {'tmcraftings:silver', 'tmcraftings:magic_crystal', 'tmcraftings:silver'},
-            {''                  , 'tmcraftings:silver'       , ''                  },
+            {''                   , 'group:tech_material'      , ''                   },
+            {'group:tech_material', 'tmcraftings:magic_crystal', 'group:tech_material'},
+            {''                   , 'group:tech_material'      , ''                   },
         },
     })
 
@@ -1149,9 +1149,9 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         output = "tmcraftings:wcu 8",
         recipe = {
 
-            {'tmcraftings:silver', 'tmcraftings:gold'      , 'tmcraftings:silver'},
-            {'tmcraftings:gold'  , 'tmcraftings:magic_dust', 'tmcraftings:gold'  },
-            {'tmcraftings:silver', 'tmcraftings:gold'      , 'tmcraftings:silver'},
+            {"group:tech_material", "tmcraftings:gold"      , "tmcraftings:silver"},
+            {"tmcraftings:gold"   , "tmcraftings:magic_dust", "tmcraftings:gold"  },
+            {"group:tech_material", "tmcraftings:gold"      , "tmcraftings:silver"},
         }
     })
 
