@@ -48,7 +48,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         description = "Iron Ingot",
         inventory_image = "tmcraftings_iron_ingot.png",
-        stack_max = 99
+        stack_max = 99,
+
+        groups = {tech_material = 3}
     })
 
     minetest.register_craftitem('tmcraftings:hematite', {
@@ -96,7 +98,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         description = "Tungsten Ingot",
         inventory_image = "tmcraftings_tungsten_ingot.png",
-        stack_max = 99
+        stack_max = 99,
+
+        groups = {tech_material = 2}
     })
 
     minetest.register_craftitem('tmcraftings:wolframite', {
@@ -217,7 +221,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         description = "Silver Ingot",
         inventory_image = "tmcraftings_silver_ingot.png",
-        stack_max = 99
+        stack_max = 99,
+
+        groups = {tech_material = 1}
     })
 
     minetest.register_craftitem('tmcraftings:arguenite', {
@@ -297,6 +303,101 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         end
     })
 
+    -- Silver block --
+    minetest.register_node('tmcraftings:silver_block', {
+        
+        description = "Silver block",
+
+        tiles = {'tmcraftings_silver_block.png'},
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:silver_block',
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+        },
+    })
+
+--# Gold ---------------------------------------------------#--
+
+    minetest.register_craftitem('tmcraftings:gold', {
+
+        description = "Gold Ingot",
+        inventory_image = "tmcraftings_gold_ingot.png",
+        stack_max = 99
+    })
+
+    minetest.register_craftitem('tmcraftings:aurumite', {
+
+        description = "Aurumite",
+        inventory_image = "tmcraftings_aurumite.png",
+        stack_max = 99
+    })
+
+    minetest.register_craft({
+
+        type = "cooking",
+        output = "tmcraftings:gold",
+        recipe = "tmcraftings:aurumite",
+        cooktime = 20,
+    })
+
+    minetest.register_node('tmcraftings:stone_with_gold', {
+
+        description = "Gold Ore",
+        drop = "tmcraftings:aurumite",
+
+        tiles = {"default_stone.png^tmcraftings_gold_ore.png"},
+
+        groups = {cracky = 5},
+        sounds = default.node_sound_stone_defaults(),
+    })
+
+    minetest.register_ore({
+
+        ore_type       = "scatter",
+        ore            = "tmcraftings:stone_with_gold",
+        wherein        = "default:stone",
+        clust_scarcity = 16 * 16 * 16,
+        clust_num_ores = 4,
+        clust_size     = 4,
+        y_max          = -400,
+        y_min          = -24000,
+    })
+
+    -- Gold block --
+    minetest.register_node('tmcraftings:gold_block', {
+        
+        description = "Gold block",
+
+        tiles = {'tmcraftings_gold_block.png'},
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:gold_block',
+        recipe = {
+            
+            {'tmcraftings:gold', 'tmcraftings:gold', 'tmcraftings:gold'},
+            {'tmcraftings:gold', 'tmcraftings:gold', 'tmcraftings:gold'},
+            {'tmcraftings:gold', 'tmcraftings:gold', 'tmcraftings:gold'},
+        },
+    })
+
 --# Magic Crystal ------------------------------------------#--
 
     minetest.register_craftitem('tmcraftings:magic_crystal', {
@@ -342,31 +443,39 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         end
     })
 
+--# Cursed Ruby --------------------------------------------#--
+
+    minetest.register_craftitem('tmcraftings:ruby', {
+
+        description = "Cursed Ruby",
+        inventory_image = "tmcraftings_cursed_ruby.png",
+        stack_max = 99
+    })
+
+    minetest.register_node('tmcraftings:stone_with_ruby', {
+
+        description = "Ruby Ore",
+        drop = "tmcraftings:ruby",
+
+        tiles = {"default_stone.png^tmcraftings_ruby_ore.png"},
+
+        groups = {cracky = 6},
+        sounds = default.node_sound_stone_defaults()
+    })
+
+    minetest.register_ore({
+
+        ore_type       = "scatter",
+        ore            = "tmcraftings:stone_with_ruby",
+        wherein        = "default:stone",
+        clust_scarcity = 24 * 24 * 24,
+        clust_num_ores = 4,
+        clust_size     = 6,
+        y_max          = -200,
+        y_min          = -24000,
+    })
+
 --# Ingot to block -----------------------------------------#--
-
-    -- Silver block --
-    minetest.register_node('tmcraftings:silver_block', {
-            
-        description = "Silver block",
-
-        tiles = {'tmcraftings_silver_block.png'},
-
-        is_ground_content = false,
-        groups = {cracky = 4},
-
-        sounds = default.node_sound_metal_defaults(),
-    })
-
-    minetest.register_craft({
-
-        output = 'tmcraftings:silver_block',
-        recipe = {
-            
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-        },
-    })
 
     -- Other ingots --
     ingots = {[4] = 'iron', [5] = 'tungsten', [6] = 'titanium'}
@@ -395,21 +504,108 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                 {'tmcraftings:'..n, 'tmcraftings:'..n, 'tmcraftings:'..n},
                 {'tmcraftings:'..n, 'tmcraftings:'..n, 'tmcraftings:'..n},
                 {'tmcraftings:'..n, 'tmcraftings:'..n, 'tmcraftings:'..n},
-            },
+            }
         })
     end
 
+--# Rusty iron block ---------------------------------------#--
+
+    minetest.register_node('tmcraftings:rusty_block', {
+
+        description = "Rusty Iron Block",
+
+        tiles = {'tmcraftings_rusty_block.png'},
+
+        drop = {
+
+            max_items = 9,
+            items = {
+
+                -- Scrap --
+                {rarity = 9, items = {'tmcraftings:scrap 1'}},
+                {rarity = 8, items = {'tmcraftings:scrap 2'}},
+                {rarity = 7, items = {'tmcraftings:scrap 3'}},
+                {rarity = 6, items = {'tmcraftings:scrap 4'}},
+                {rarity = 5, items = {'tmcraftings:scrap 5'}},
+
+                -- Iron --
+                {rarity = 9, items = {'tmcraftings:iron  2'}},
+                {rarity = 8, items = {'tmcraftings:iron  3'}},
+                {rarity = 7, items = {'tmcraftings:iron  4'}},
+                {rarity = 6, items = {'tmcraftings:iron  5'}},
+                {rarity = 5, items = {'tmcraftings:iron  6'}},
+            }
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 4},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:rusty_block',
+        recipe = {
+            
+            {'tmcraftings:scrap', 'tmcraftings:scrap', 'tmcraftings:scrap'},
+            {'tmcraftings:scrap', 'tmcraftings:scrap', 'tmcraftings:scrap'},
+            {'tmcraftings:scrap', 'tmcraftings:scrap', 'tmcraftings:scrap'},
+        },
+    })
+
+    minetest.register_abm({
+        
+        nodenames = {"tmcraftings:iron_block"},
+        interval  = 5,
+        chance    = 5,
+        neighbors = "water_source",
+
+        action =
+        function(pos)
+            
+            minetest.set_node(pos, {name = 'tmcraftings:rusty_block'})
+        end
+    })
+
 --# Replace Obsidian ---------------------------------------#--
 
-    minetest.override_item('default:obsidian', {
+    -- For every obsidian variant -- 
+    for _, name in pairs({'obsidian', 'obsidianbrick', 'obsidian_block', 'obsidian_glass'}) do
 
-        description = "Obsidian",
+        -- Replace blocks --
+        minetest.override_item('default:' .. name, {
+    
+            groups = {cracky = 7},
+            on_blast = function() return nil end
+        })
 
-        tiles = {'default_obsidian.png'},
+        -- Replace stairs --
+        minetest.override_item('stairs:stair_' .. name, {
 
-        groups = {cracky = 7},
-        sounds = default.node_sound_stone_defaults(),
-    })
+            groups = {cracky = 7},
+            on_blast = function() return nil end
+        })
+
+        minetest.override_item('stairs:stair_inner_' .. name, {
+
+            groups = {cracky = 7},
+            on_blast = function() return nil end
+        })
+
+        minetest.override_item('stairs:stair_outer_' .. name, {
+
+            groups = {cracky = 7},
+            on_blast = function() return nil end
+        })
+
+        -- Replace slab --
+        minetest.override_item('stairs:slab_' .. name, {
+
+            groups = {cracky = 7},
+            on_blast = function() return nil end
+        })
+    end
 
 --# Replace bones ------------------------------------------#--
 
@@ -551,9 +747,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
             local meta = minetest.get_meta(pos)
             local inv  = meta:get_inventory()
-            
+
             if not inv:get_stack('fuel', 1):is_empty()
             or meta:get_float('fire') > 0 then
+
+                meta:set_float('timer', -1)
 
                 s_node(pos, 'default:furnace_active')
                 minetest.get_node_timer(pos):start(0.5)
@@ -568,6 +766,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             
             if not inv:get_stack('fuel', 1):is_empty()
             or meta:get_float('fire') > 0 then
+
+                meta:set_float('timer', -1)
 
                 s_node(pos, 'default:furnace_active')
                 minetest.get_node_timer(pos):start(0.5)
@@ -843,7 +1043,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.override_item('vessels:shelf', {
 
-        description = "Bookshelf",
+        description = "Vessels Shelf",
 
         tiles = {
             
@@ -899,6 +1099,43 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         on_metadata_inventory_put  = function() return end,
         on_metadata_inventory_move = function() return end,
         on_metadata_inventory_take = function() return end
+    })
+
+--# Ledder -------------------------------------------------#--
+    
+    minetest.register_node('tmcraftings:iron_ladder', {
+
+        description = "Iron Ladder",
+
+        drawtype = "signlike",
+        tiles = {"tmcraftings_iron_ladder.png"},
+        inventory_image = "tmcraftings_iron_ladder.png",
+        wield_image = "tmcraftings_iron_ladder.png",
+
+        paramtype = "light",
+        paramtype2 = "wallmounted",
+        sunlight_propagates = true,
+        is_ground_content = false,
+
+        walkable = false,
+        climbable = true,
+
+        selection_box = {type = "wallmounted"},
+
+        groups = {cracky = 4},
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:iron_ladder",
+
+        recipe = {
+
+            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+            {"tmcraftings:iron", "tmcraftings:iron", "tmcraftings:iron"},
+            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+        }
     })
 
 --# Metal Crate --------------------------------------------#--
@@ -1114,401 +1351,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
     })
 
---# Magic Battery ------------------------------------------#--
-
-    minetest.register_node('tmcraftings:magic_battery', {
-
-        description = "Magic Battery",
-
-        tiles = {
-
-            'tmcraftings_silver_block.png' ,
-            'tmcraftings_silver_block.png' ,
-            'tmcraftings_silver_block.png^tmcraftings_magic_battery.png',
-            'tmcraftings_silver_block.png^tmcraftings_magic_battery.png',
-        },
-        
-        light_source = default.LIGHT_MAX / 2,
-
-        is_ground_content = false,
-        groups = {cracky = 4},
-
-        sounds = default.node_sound_metal_defaults(),
-    })
-
-    minetest.register_craft({
-
-        output = 'tmcraftings:magic_battery',
-        recipe = {
-            
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-            {'tmcraftings:iron', 'tmcraftings:magic_core', 'tmcraftings:iron'},
-            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
-        },
-    })
-
---# Magic Furnace ------------------------------------------#--
-
-    minetest.register_node('tmcraftings:mfurnace', {
-
-        description = "Magic Furnace",
-
-        tiles = {
-
-            "tmcraftings_mfurnace_top.png" , "tmcraftings_mfurnace_bot.png" ,
-            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_side.png",
-            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_frnt.png",
-        },
-
-        paramtype2 = "facedir",
-        legacy_facedir_simple = true,
-
-        groups = {cracky = 5},
-        is_ground_content = false,
-
-        sounds = default.node_sound_metal_defaults(),
-
-    --# Behaviour scope ------------------------------------#--
-
-        can_dig = is_diggable,
-        
-        on_construct =
-        function(pos)
-
-            local meta = minetest.get_meta(pos)
-
-            meta:set_string('formspec', get_gui('mfurnace'))
-            meta:set_float('timer', -1)
-
-            local inv = meta:get_inventory()
-
-            inv:set_size('src', 1)
-            inv:set_size('dst', 1)
-        end,
-
-        -- What happens if furnace explodes --
-        on_blast =
-        function(pos)
-
-            local drops = {}
-
-            -- Get items inside of the furnace --
-            default.get_inventory_drops(pos, 'src', drops)
-            default.get_inventory_drops(pos, 'dst', drops)
-
-            -- Drop itself --
-            drops[#drops + 1] = "tmcraftings:mfurnace"
-
-            minetest.remove_node(pos)
-            return drops
-        end,
-    
-        allow_metadata_inventory_put  = can_put_itm,
-        allow_metadata_inventory_move = can_mov_itm,
-        allow_metadata_inventory_take = can_tak_itm,
-    })
-
-    minetest.register_node('tmcraftings:mfurnace_on', {
-
-        tiles = {
-
-            "tmcraftings_mfurnace_top_lit.png" , "tmcraftings_mfurnace_bot.png" ,
-            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_side.png",
-            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_frnt_lit.png",
-        },
-
-        paramtype2 = "facedir",
-        legacy_facedir_simple = true,
-
-        drop = 'tmcraftings:mfurnace',
-
-        paramtype = "light",
-        sunlight_propagates = false,
-        light_source = default.LIGHT_MAX / 2,
-
-        groups = {cracky = 5, not_in_creative_inventory = 1},
-        is_ground_content = false,
-
-        sounds = default.node_sound_metal_defaults(),
-        
-    --# Behaviour scope ------------------------------------#--
-
-        can_dig = is_diggable,
-        on_timer = fuelless_timer,
-
-        -- Start working on inventory event --
-        on_metadata_inventory_move =
-        function(pos)
-
-            minetest.get_node_timer(pos):start(0.1)
-        end,
-        
-        on_metadata_inventory_put =
-        function(pos)
-
-            minetest.get_node_timer(pos):start(0.1)
-        end,
-
-        -- What happens if furnace explodes --
-        on_blast =
-        function(pos)
-
-            local drops = {}
-
-            -- Get items inside of the furnace --
-            default.get_inventory_drops(pos, 'src', drops)
-            default.get_inventory_drops(pos, 'dst', drops)
-
-            -- Drop itself --
-            drops[#drops + 1] = "tmcraftings:mfurnace"
-
-            minetest.remove_node(pos)
-            return drops
-        end,
-    
-        allow_metadata_inventory_put  = can_put_itm,
-        allow_metadata_inventory_move = can_mov_itm,
-        allow_metadata_inventory_take = can_tak_itm,
-    })
-
-    -- Turn on --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:mfurnace'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-
-                s_node(pos, 'tmcraftings:mfurnace_on')
-            end
-        end
-    })
-
-    -- Turn off --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:mfurnace_on'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if not minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-                
-                s_node(pos, 'tmcraftings:mfurnace')
-            end
-        end,
-    })
-
-    minetest.register_craft({
-
-        output = 'tmcraftings:mfurnace',
-        recipe = {
-            
-            {'tmcraftings:iron', 'tmcraftings:iron', 'tmcraftings:iron'},
-            {'tmcraftings:iron', 'tmcraftings:magic_core', 'tmcraftings:iron'},
-            {'tmcraftings:titanium', 'tmcraftings:titanium', 'tmcraftings:titanium'},
-        },
-    })
-
---# Magic Post light ---------------------------------------#--
-
-    minetest.register_node("tmcraftings:magic_postlight", {
-
-        drawtype = "nodebox",
-
-        tiles = {
-
-            "tmcraftings_magic_postlight_top.png" , "tmcraftings_magic_postlight_off_top.png" ,
-            "tmcraftings_magic_postlight_side.png", "tmcraftings_magic_postlight_side.png",
-            "tmcraftings_magic_postlight_side.png", "tmcraftings_magic_postlight_side.png",
-        },
-
-        node_box = {
-
-            type = "fixed",
-
-            fixed = {
-
-                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
-            }
-        },
-
-        paramtype = "light",
-        sunlight_propagates = true,
-        light_source = default.LIGHT_MAX,
-
-        is_ground_content = false,
-
-        drop = 'tmcraftings:magic_postlight_off',
-
-        groups = {cracky = 4, not_in_creative_inventory = 1},
-        sounds = default.node_sound_metal_defaults(),
-    })
-
-    minetest.register_node("tmcraftings:magic_postlight_off", {
-
-        description = "Magic Post Light",
-
-        drawtype = "nodebox",
-
-        tiles = {
-
-            "tmcraftings_magic_postlight_off_top.png" , "tmcraftings_magic_postlight_off_top.png" ,
-            "tmcraftings_magic_postlight_off_side.png", "tmcraftings_magic_postlight_off_side.png",
-            "tmcraftings_magic_postlight_off_side.png", "tmcraftings_magic_postlight_off_side.png",
-        },
-
-        node_box = {
-
-            type = "fixed",
-
-            fixed = {
-
-                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
-            }
-        },
-
-        paramtype = "light",
-        sunlight_propagates = true,
-        is_ground_content = false,
-
-        groups = {cracky = 2},
-        sounds = default.node_sound_metal_defaults(),
-    })
-
-    -- Turn on --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:magic_postlight_off'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-
-                minetest.set_node(pos, {name = 'tmcraftings:magic_postlight'})
-            end
-        end
-    })
-
-    -- Turn off --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:magic_postlight'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if not minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-                
-                minetest.set_node(pos, {name = 'tmcraftings:magic_postlight_off'})
-            end
-        end,
-    })
-
-    minetest.register_craft({
-
-        output = 'tmcraftings:magic_postlight_off',
-        recipe = {
-            
-            {'', 'tmcraftings:silver', ''},
-            {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
-            {'', 'tmcraftings:silver', ''},
-        },
-    })
-
---# Magic rail ---------------------------------------------#--
-
-    -- Use default rail API --
-    carts:register_rail('tmcraftings:mrail', {
-
-        drop = 'tmcraftings:mrail_off',
-
-        tiles = {
-
-            "tmcraftings_mrail_str.png", "tmcraftings_mrail_cur.png",
-            "tmcraftings_mrail_tjn.png", "tmcraftings_mrail_crs.png"
-        },
-        
-        groups = carts:get_rail_groups(),
-
-    }, {acceleration = 6})
-
-    carts:register_rail('tmcraftings:mrail_off', {
-
-        description = 'Magic Rail',
-        inventory_image = "tmcraftings_mrail_str.png",
-
-        tiles = {
-
-            "tmcraftings_mrail_str_off.png", "tmcraftings_mrail_cur_off.png",
-            "tmcraftings_mrail_tjn_off.png", "tmcraftings_mrail_crs_off.png"
-        },
-
-        groups = carts:get_rail_groups(),
-
-    })
-
-    -- Turn on --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:mrail_off'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-
-                minetest.set_node(pos, {name = 'tmcraftings:mrail'})
-            end
-        end
-    })
-
-    -- Turn off --
-    minetest.register_abm({
-
-        nodenames = {'tmcraftings:mrail'},
-        interval  = 1,
-        chance    = 1,
-        
-        action =
-        function(pos)
-
-            if not minetest.find_node_near(pos, 1, 'tmcraftings:magic_battery') then
-
-                minetest.set_node(pos, {name = 'tmcraftings:mrail_off'})
-            end
-        end
-    })
-
-    minetest.register_craft({
-
-        output = "tmcraftings:mrail_off 16",
-
-        recipe = {
-
-            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
-            {"tmcraftings:iron", "tmcraftings:magic_core", "tmcraftings:iron"},
-            {"tmcraftings:iron", "group:wood"            , "tmcraftings:iron"},
-        }
-    })
-
 --# Enchanted Chest ----------------------------------------#--
 
     minetest.register_node('tmcraftings:echest', {
-            
+                
         description = "Enchanted Chest",
         
         tiles = {
@@ -1606,6 +1452,1334 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
     })
 
+-- Eletronics --
+--# Magic Battery ------------------------------------------#--
+
+    minetest.register_node('tmcraftings:magic_battery', {
+
+        description = "Magic Battery",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png'    ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png'    ,
+            'tmcraftings_silver_block.png^tmcraftings_magic_battery.png',
+        },
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 1, battery = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:magic_battery',
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'tmcraftings:iron', 'tmcraftings:magic_core', 'tmcraftings:iron'},
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+        },
+    })
+
+--# Switch -------------------------------------------------#--
+
+    minetest.register_node('tmcraftings:switch', {
+
+        description = "Swich",
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Base --
+                {0.5, 0.5, 0.5, -0.5, -0.5, -0.25},
+
+                -- Switch lever --
+                {-0.05, 0.5, -0.255, 0.05, 0.25, -0.35},
+
+                -- Lever base --
+                {-0.31, 0.25, -0.255, 0.31, 0.13, -0.35},
+
+                -- Left base edge --
+                {-0.31, 0.13, -0.255, -0.19, -0.06, -0.35},
+
+                -- Right base edge --
+                {0.31, 0.13, -0.255, 0.19, -0.06, -0.35},
+            },
+        },
+
+        tiles = {
+
+            'tmcraftings_switch_side.png^[transformR270]^[transformFY',
+            'tmcraftings_switch_side.png^[transformR270]',
+            'tmcraftings_switch_side.png' ,
+            'tmcraftings_switch_side.png^[transformFX'   ,
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'    ,
+            'tmcraftings_switch_frnt.png' ,
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        on_rightclick =
+        function(pos)
+            
+            minetest.sound_play('doors_steel_door_close', {
+
+                gain = 0.3,
+                pos = pos,
+                max_hear_distance = 5
+        
+            }, true)
+
+            s_node(pos, 'tmcraftings:switch_on')
+        end
+    })
+
+    minetest.register_node('tmcraftings:switch_on', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Base --
+                {0.5, 0.5, 0.5, -0.5, -0.5, -0.25},
+
+                -- Switch lever --
+                {-0.05, -0.5, -0.255, 0.05, -0.25, -0.35},
+
+                -- Lever base --
+                {-0.31, -0.25, -0.255, 0.31, -0.13, -0.35},
+
+                -- Left base edge --
+                {-0.31, -0.13, -0.255, -0.19, 0.06, -0.35},
+
+                -- Right base edge --
+                {0.31, -0.13, -0.255, 0.19, 0.06, -0.35},
+            },
+        },
+
+        tiles = {
+
+            'tmcraftings_switch_side.png^[transformR270]^[transformFY',
+            'tmcraftings_switch_side.png^[transformR270]',
+            'tmcraftings_switch_side.png'   ,
+            'tmcraftings_switch_side.png^[transformFX'   ,
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png' ,
+            'tmcraftings_switch_frnt_on.png',
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        drop = "tmcraftings:switch",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 1, battery = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        on_rightclick =
+        function(pos)
+            
+            minetest.sound_play('doors_steel_door_close', {
+
+                gain = 0.3,
+                pos = pos,
+                max_hear_distance = 5
+        
+            }, true)
+
+            s_node(pos, 'tmcraftings:switch')
+        end
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:switch",
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:magic_crystal', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'group:engine'             , 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:ruby'         , 'tmcraftings:silver'},
+        },
+    })
+
+--# Magic Boiler -------------------------------------------#--
+
+    minetest.register_node('tmcraftings:magic_boiler', {
+
+        description = "Magic Boiler",
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Base --
+                {0.375, 0.375, 0.375, -0.375, -0.5, -0.375},
+
+                -- Chimney --
+                {0.12, 0.38, 0.12, -0.12, 0.5, -0.12},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_magic_boiler_top.png" , "tmcraftings_mfurnace_bot.png"     ,
+            "tmcraftings_magic_boiler_side.png", "tmcraftings_magic_boiler_side.png",
+            "tmcraftings_magic_boiler_side.png", "tmcraftings_magic_boiler.png"     ,
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        groups = {cracky = 5},
+        is_ground_content = false,
+
+        sounds = default.node_sound_metal_defaults(),
+    
+    --# Behaviour Scope ------------------------------------#--
+    
+        can_dig      = is_diggable,
+        on_construct = on_load_boiler,
+
+        on_timer = boiler_behaviour,
+
+        on_metadata_inventory_put  =
+        function(pos)
+            
+            minetest.get_node_timer(pos):start(1)
+        end,
+
+        on_metadata_inventory_move =
+        function(pos)
+            
+            minetest.get_node_timer(pos):start(1)
+        end,
+
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            -- Get items inside of the furnace --
+            default.get_inventory_drops(pos, 'fuel', drops)
+
+            -- Drop itself --
+            drops[#drops + 1] = "tmcraftings:magic_boiler"
+
+            minetest.remove_node(pos)
+            return drops
+        end,
+
+        allow_metadata_inventory_put  = can_put_itm,
+        allow_metadata_inventory_move = can_mov_itm
+    })
+
+    minetest.register_node('tmcraftings:magic_boiler_on', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Base --
+                {0.375, 0.375, 0.375, -0.375, -0.5, -0.375},
+
+                -- Chimney --
+                {0.12, 0.38, 0.12, -0.12, 0.5, -0.12},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_magic_boiler_top_lit.png", "tmcraftings_mfurnace_bot.png"     ,
+            "tmcraftings_magic_boiler_side.png"   , "tmcraftings_magic_boiler_side.png",
+            "tmcraftings_magic_boiler_side.png"   , "tmcraftings_magic_boiler_lit.png" ,
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        drop = 'tmcraftings:magic_boiler',
+
+        light_source = default.LIGHT_MAX / 2,
+
+        groups = {cracky = 5, source = 1, battery = 1, not_in_creative_inventory = 1},
+        is_ground_content = false,
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour Scope ------------------------------------#--
+    
+        can_dig = is_diggable,
+        on_timer = boiler_behaviour,
+
+        on_metadata_inventory_put  =
+        function(pos)
+            
+            minetest.get_node_timer(pos):start(1)
+        end,
+
+        on_metadata_inventory_move =
+        function(pos)
+            
+            minetest.get_node_timer(pos):start(1)
+        end,
+
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            -- Get items inside of the furnace --
+            default.get_inventory_drops(pos, 'fuel', drops)
+
+            -- Drop itself --
+            drops[#drops + 1] = "tmcraftings:magic_boiler"
+
+            minetest.remove_node(pos)
+            return drops
+        end,
+
+        allow_metadata_inventory_put  = can_put_itm,
+        allow_metadata_inventory_move = can_mov_itm
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:magic_boiler',
+        recipe = {
+            
+            {'tmcraftings:iron'    , 'tmcraftings:magic_dust'  , 'tmcraftings:iron'    },
+            {'tmcraftings:iron'    , 'tmcraftings:magic_dust'  , 'tmcraftings:iron'    },
+            {'tmcraftings:titanium', 'tmcraftings:titanium'    , 'tmcraftings:titanium'},
+        },
+    })
+
+--# Disperser ----------------------------------------------#--
+
+    minetest.register_node('tmcraftings:disperser', {
+
+        description = "Disperser",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_silver_block.png^tmcraftings_disperser.png',
+            'tmcraftings_silver_block.png^tmcraftings_disperser.png',
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_node('tmcraftings:disperser_on', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_disperser_on.png',
+            'tmcraftings_silver_block.png^tmcraftings_disperser_on.png',
+        },
+
+        drop = "tmcraftings:disperser",
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, deliver = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:disperser",
+        recipe = {
+            
+            {"tmcraftings:silver", "tmcraftings:silver"    , "tmcraftings:silver"},
+            {"tmcraftings:silver", "tmcraftings:magic_core", "tmcraftings:silver"},
+            {"tmcraftings:silver", "tmcraftings:silver"    , "tmcraftings:silver"},
+        },
+    })
+
+--# Post ---------------------------------------------------#--
+
+    minetest.register_node('tmcraftings:post', {
+
+        description = "Magic Post",
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
+            }
+        },
+
+        tiles = {
+
+            "tmcraftings_post_top.png",
+            "tmcraftings_post_top.png",
+            "tmcraftings_post.png"    ,
+        },
+
+        paramtype = "light",
+        sunlight_propagates = true,
+        is_ground_content = false,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 2, wire = 2},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        -- Clear meta to avoid phantom charge --
+        on_destruct = eletronics.on_break_wite
+    })
+
+    minetest.register_node('tmcraftings:post_on', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
+            }
+        },
+
+        tiles = {
+
+            "tmcraftings_post_top_on.png",
+            "tmcraftings_post_top_on.png",
+            "tmcraftings_post_on.png"    ,
+        },
+
+        paramtype = "light",
+        sunlight_propagates = true,
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, deliver = 1, source = 2, wire = 2, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        -- Clear meta to avoid phantom charge --
+        on_destruct = eletronics.on_break_wite
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:post 3",
+        recipe = {
+            
+            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
+            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
+            {"tmcraftings:silver", "tmcraftings:magic_dust", "tmcraftings:silver"},
+        },
+    })
+
+--# Wires --------------------------------------------------#--
+
+    minetest.register_node('tmcraftings:wires', {
+
+        description = 'Wires',
+
+        inventory_image = "tmcraftings_wires.png",
+
+        drawtype = "raillike",
+        tiles = {
+
+            "tmcraftings_wires_str.png", "tmcraftings_wires_cur.png",
+            "tmcraftings_wires_tjn.png", "tmcraftings_wires_crs.png"
+        },
+
+        drop = "tmcraftings:wires",
+        
+        paramtype = "light",
+        sunlight_propagates = true,
+        is_ground_content = false,
+
+        walkable = false,
+
+        selection_box = {
+
+            type = "fixed",
+            fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
+        },
+
+        groups = {choppy = 1, wire = 1, source = 2},
+        sounds = default.node_sound_stone_defaults(),
+
+        -- Clear meta to avoid phantom charge --
+        on_destruct = eletronics.on_break_wite
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:wires 9",
+
+        recipe = {
+
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+            {"group:tech_material", "tmcraftings:magic_dust", "group:tech_material"},
+        }
+    })
+
+--# Thinker ------------------------------------------------#--
+
+    minetest.register_node('tmcraftings:thinker', {
+
+        description = "Thinker",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'  ,
+            'tmcraftings_silver_block.png',
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'  ,
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'  ,
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour Scope ------------------------------------#--
+    
+        on_construct  = eletronics.on_load_thinker,
+        on_rightclick = eletronics.on_click_thinker
+    })
+
+    minetest.register_node('tmcraftings:thinker_IO', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
+            'tmcraftings_silver_block.png',
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
+        },
+
+        drop = "tmcraftings:thinker",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour Scope ------------------------------------#--
+    
+        on_construct  = eletronics.on_load_thinker,
+        on_rightclick = eletronics.on_click_thinker
+    })
+
+    minetest.register_node('tmcraftings:thinker_OI', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
+        },
+
+        drop = "tmcraftings:thinker",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour Scope ------------------------------------#--
+    
+        on_construct  = eletronics.on_load_thinker,
+        on_rightclick = eletronics.on_click_thinker
+    })
+
+    minetest.register_node('tmcraftings:thinker_on', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
+            'tmcraftings_silver_block.png',
+
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
+            'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
+        },
+
+        drop = "tmcraftings:thinker",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 2, depends = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour Scope ------------------------------------#--
+    
+            on_construct  = eletronics.on_load_thinker,
+            on_rightclick = eletronics.on_click_thinker
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:thinker",
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:wcu'   , 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:silver', 'tmcraftings:silver'},
+        },
+    })
+
+--# Inverser -----------------------------------------------#--
+
+    minetest.register_node('tmcraftings:inverser', {
+
+        description = "Inverser",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_inverser_top.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+
+            'tmcraftings_silver_block.png',
+            'tmcraftings_silver_block.png',
+            'tmcraftings_silver_block.png^tmcraftings_inverser.png',
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 2, depends = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_node('tmcraftings:inverser_on', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_inverser_top.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+
+            'tmcraftings_silver_block.png',
+            'tmcraftings_silver_block.png',
+            'tmcraftings_silver_block.png^tmcraftings_inverser_on.png' ,
+        },
+
+        drop = "tmcraftings:inverser",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:inverser",
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'},
+            {'tmcraftings:ruby'  , 'tmcraftings:magic_core', 'tmcraftings:ruby'  },
+            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'},
+        },
+    })
+
+--# Magic Gate ---------------------------------------------#--
+
+    minetest.register_node('tmcraftings:magic_gate', {
+
+        description = "Magic Gate",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png' ,
+            'tmcraftings_silver_block.png^tmcraftings_magic_gate.png',
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
+            'tmcraftings_silver_block.png',
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_node('tmcraftings:magic_gate_on', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png'    ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png'    ,
+            'tmcraftings_silver_block.png^tmcraftings_magic_gate_on.png',
+            'tmcraftings_silver_block.png^tmcraftings_thinker.png'      ,
+            'tmcraftings_silver_block.png',
+        },
+
+        drop = "tmcraftings:magic_gate",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 2, depends = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:magic_gate",
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'    },
+            {'tmcraftings:ruby'  , 'tmcraftings:magic_dust', 'tmcraftings:magic_dust'},
+            {'tmcraftings:silver', 'tmcraftings:silver'    , 'tmcraftings:silver'    },
+        },
+    })
+
+--# Magic Tic ----------------------------------------------#--
+
+    minetest.register_node('tmcraftings:magic_tic', {
+
+        description = "Magic Tic-Tac",
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_silver_block.png^tmcraftings_magic_tic.png',
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_node('tmcraftings:magic_tic_on', {
+
+        tiles = {
+
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_component.png'   ,
+            'tmcraftings_silver_block.png^tmcraftings_magic_tic_on.png',
+        },
+
+        drop = "tmcraftings:magic_tic",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 1, battery = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        on_timer = eletronics.tic,
+        on_construct = eletronics.on_load_tic
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:magic_tic",
+        recipe = {
+            
+            {'tmcraftings:silver', 'tmcraftings:silver'      , 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:clock_engine', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:silver'      , 'tmcraftings:silver'},
+        },
+    })
+
+--# Solar Panel --------------------------------------------#--
+
+    minetest.register_node('tmcraftings:solar', {
+
+        description = "Solar Panel",
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
+            }
+        },
+
+        tiles = {
+
+            'tmcraftings_solar.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_solar_side.png',
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_node('tmcraftings:solar_on', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
+            }
+        },
+
+        tiles = {
+
+            'tmcraftings_solar.png',
+            'tmcraftings_silver_block.png^tmcraftings_component.png',
+            'tmcraftings_solar_side.png',
+        },
+
+        drop = "tmcraftings:solar",
+        
+        light_source = default.LIGHT_MAX / 2,
+
+        is_ground_content = false,
+        groups = {cracky = 5, source = 1, battery = 1, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults()
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:solar",
+        recipe = {
+            
+            {'tmcraftings:gold'  , 'tmcraftings:gold'        , 'tmcraftings:gold'  },
+            {'tmcraftings:silver', 'tmcraftings:clock_engine', 'tmcraftings:silver'},
+            {'tmcraftings:silver', 'tmcraftings:silver'      , 'tmcraftings:silver'},
+        },
+    })
+
+--# Magic Furnace ------------------------------------------#--
+
+    minetest.register_node('tmcraftings:mfurnace', {
+
+        description = "Magic Furnace",
+
+        tiles = {
+
+            "tmcraftings_mfurnace_top.png" , "tmcraftings_mfurnace_bot.png" ,
+            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_side.png",
+            "tmcraftings_mfurnace_side.png", "tmcraftings_mfurnace_frnt.png",
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        groups = {cracky = 5},
+        is_ground_content = false,
+
+        sounds = default.node_sound_metal_defaults(),
+
+    --# Behaviour scope ------------------------------------#--
+
+        can_dig = is_diggable,
+        
+        on_construct =
+        function(pos)
+
+            local meta = minetest.get_meta(pos)
+
+            meta:set_string('formspec', get_gui('mfurnace'))
+            meta:set_float('timer', -1)
+
+            local inv = meta:get_inventory()
+
+            inv:set_size('src', 1)
+            inv:set_size('dst', 1)
+        end,
+
+        -- What happens if furnace explodes --
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            -- Get items inside of the furnace --
+            default.get_inventory_drops(pos, 'src', drops)
+            default.get_inventory_drops(pos, 'dst', drops)
+
+            -- Drop itself --
+            drops[#drops + 1] = "tmcraftings:mfurnace"
+
+            minetest.remove_node(pos)
+            return drops
+        end,
+    
+        allow_metadata_inventory_put  = can_put_itm,
+        allow_metadata_inventory_move = can_mov_itm,
+        allow_metadata_inventory_take = can_tak_itm,
+    })
+
+    minetest.register_node('tmcraftings:mfurnace_on', {
+
+        tiles = {
+
+            "tmcraftings_mfurnace_top_lit.png" , "tmcraftings_mfurnace_bot.png"     ,
+            "tmcraftings_mfurnace_side_lit.png", "tmcraftings_mfurnace_side_lit.png",
+            "tmcraftings_mfurnace_side_lit.png", "tmcraftings_mfurnace_frnt_lit.png",
+        },
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+
+        drop = 'tmcraftings:mfurnace',
+
+        light_source = default.LIGHT_MAX / 2,
+
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+        is_ground_content = false,
+
+        sounds = default.node_sound_metal_defaults(),
+        
+    --# Behaviour scope ------------------------------------#--
+
+        can_dig = is_diggable,
+        on_timer = fuelless_timer,
+
+        -- Start working on inventory event --
+        on_metadata_inventory_move =
+        function(pos)
+
+            local meta = minetest.get_meta(pos)
+            meta:set_float('timer', -1)
+
+            minetest.get_node_timer(pos):start(0.1)
+        end,
+        
+        on_metadata_inventory_put =
+        function(pos)
+
+            local meta = minetest.get_meta(pos)
+            meta:set_float('timer', -1)
+
+            minetest.get_node_timer(pos):start(0.1)
+        end,
+
+        -- What happens if furnace explodes --
+        on_blast =
+        function(pos)
+
+            local drops = {}
+
+            -- Get items inside of the furnace --
+            default.get_inventory_drops(pos, 'src', drops)
+            default.get_inventory_drops(pos, 'dst', drops)
+
+            -- Drop itself --
+            drops[#drops + 1] = "tmcraftings:mfurnace"
+
+            minetest.remove_node(pos)
+            return drops
+        end,
+    
+        allow_metadata_inventory_put  = can_put_itm,
+        allow_metadata_inventory_move = can_mov_itm,
+        allow_metadata_inventory_take = can_tak_itm,
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:mfurnace',
+        recipe = {
+            
+            {'group:tech_material' , 'group:tech_material'   , 'group:tech_material' },
+            {'group:tech_material' , 'tmcraftings:magic_core', 'group:tech_material' },
+            {'tmcraftings:titanium', 'tmcraftings:titanium'  , 'tmcraftings:titanium'},
+        },
+    })
+
+--# Magic Post light ---------------------------------------#--
+
+    minetest.register_node("tmcraftings:magic_postlight", {
+
+        description = "Magic Post Light",
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
+            }
+        },
+
+        tiles = {
+
+            "tmcraftings_magic_postlight_top.png" , "tmcraftings_magic_postlight_bot.png" ,
+            "tmcraftings_magic_postlight_side.png", "tmcraftings_magic_postlight_side.png",
+            "tmcraftings_magic_postlight_side.png", "tmcraftings_magic_postlight_side.png",
+        },
+
+        paramtype = "light",
+        sunlight_propagates = true,
+        is_ground_content = false,
+
+        groups = {cracky = 2},
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_node("tmcraftings:magic_postlight_on", {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+
+            fixed = {
+
+                {-2 / 16, -8 / 16, -2 / 16, 2 / 16, 8 / 16, 2 / 16},
+            }
+        },
+
+        tiles = {
+
+            "tmcraftings_magic_postlight_top.png"    , "tmcraftings_magic_postlight_bot.png"    ,
+            "tmcraftings_magic_postlight_side_on.png", "tmcraftings_magic_postlight_side_on.png",
+            "tmcraftings_magic_postlight_side_on.png", "tmcraftings_magic_postlight_side_on.png",
+        },
+
+        paramtype = "light",
+        sunlight_propagates = true,
+        light_source = default.LIGHT_MAX,
+
+        is_ground_content = false,
+
+        drop = 'tmcraftings:magic_postlight',
+
+        groups = {cracky = 4, not_in_creative_inventory = 1},
+        sounds = default.node_sound_metal_defaults(),
+    })
+
+    minetest.register_craft({
+
+        output = 'tmcraftings:magic_postlight_off',
+        recipe = {
+            
+            {'', 'tmcraftings:silver', ''},
+            {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
+            {'', 'tmcraftings:silver', ''},
+        },
+    })
+
+--# Magic rail ---------------------------------------------#--
+
+    -- Use default rail API --
+    carts:register_rail('tmcraftings:mrail', {
+
+        description = 'Magic Rail',
+        inventory_image = "tmcraftings_mrail_str_on.png",
+
+        tiles = {
+
+            "tmcraftings_mrail_str.png", "tmcraftings_mrail_cur.png",
+            "tmcraftings_mrail_tjn.png", "tmcraftings_mrail_crs.png"
+        },
+
+        groups = carts:get_rail_groups()
+    })
+
+    carts:register_rail('tmcraftings:mrail_on', {
+
+        drop = 'tmcraftings:mrail',
+
+        tiles = {
+
+            "tmcraftings_mrail_str_on.png", "tmcraftings_mrail_cur_on.png",
+            "tmcraftings_mrail_tjn_on.png", "tmcraftings_mrail_crs_on.png"
+        },
+        
+        groups = carts:get_rail_groups()
+
+    }, {acceleration = 6})
+
+    minetest.register_craft({
+
+        output = "tmcraftings:mrail 16",
+
+        recipe = {
+
+            {"group:tech_material", "group:wood"            , "group:tech_material"},
+            {"group:tech_material", "tmcraftings:magic_core", "group:tech_material"},
+            {"group:tech_material", "group:wood"            , "group:tech_material"},
+        }
+    })
+
+--# Pistons ------------------------------------------------#--
+
+    -- Piston --
+    minetest.register_node('tmcraftings:piston', {
+        
+        description = "Piston",
+
+        tiles = {
+
+            'tmcraftings_piston_frnt.png' ,
+            'tmcraftings_silver_block.png',
+            'tmcraftings_piston_side.png' ,
+        },
+
+        paramtype2 = 'facedir',
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        on_place = minetest.rotate_node,
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_node('tmcraftings:piston_bot', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Bottom --
+                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
+
+                -- Stick --
+                {-0.18, ((1 / 16) * 11) - 0.5, -0.18, 0.18, 0.5, 0.18},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_silver_block.png^tmcraftings_component.png",
+            "tmcraftings_silver_block.png" ,
+            "tmcraftings_piston_on_bot.png",
+        },
+
+        drop = "tmcraftings:piston",
+        paramtype2 = 'facedir',
+
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_node('tmcraftings:piston_top', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Head --
+                {0.5, 0.5, 0.5, -0.5, (1 - (0.5 / 2)) - 0.5, -0.5},
+
+                -- Stick --
+                {-0.18, (1 - (0.5 / 2)) - 0.5, -0.18, 0.18, -0.5, 0.18},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_piston_frnt.png"  ,
+            "tmcraftings_piston_frnt.png"  ,
+            "tmcraftings_piston_on_top.png",
+        },
+
+        drop = "tmcraftings:piston",
+        paramtype2 = 'facedir',
+        
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:piston",
+
+        recipe = {
+
+            {"tmcraftings:titanium", "tmcraftings:titanium"  , "tmcraftings:titanium"},
+            {"tmcraftings:silver"  , "group:engine"          , "tmcraftings:silver"  },
+            {"tmcraftings:silver"  , "tmcraftings:silver"    , "tmcraftings:silver"  },
+        }
+    })
+
+    -- Glue piston --
+    minetest.register_node('tmcraftings:glue_piston', {
+        
+        description = "Glue Piston",
+
+        tiles = {
+
+            'tmcraftings_piston_frnt_glue.png',
+            'tmcraftings_silver_block.png'    ,
+            'tmcraftings_piston_side.png'     ,
+        },
+
+        is_ground_content = false,
+        groups = {cracky = 5},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_node('tmcraftings:glue_piston_bot', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Bottom --
+                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
+
+                -- Stick --
+                {-0.18, ((1 / 16) * 11) - 0.5, -0.18, 0.18, 0.5, 0.18},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_silver_block.png^tmcraftings_component.png",
+            "tmcraftings_silver_block.png" ,
+            "tmcraftings_piston_on_bot.png",
+        },
+
+        drop = "tmcraftings:glue_piston",
+
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_node('tmcraftings:glue_piston_top', {
+
+        drawtype = "nodebox",
+        node_box = {
+
+            type = "fixed",
+            fixed = {
+
+                -- Head --
+                {0.5, 0.5, 0.5, -0.5, (1 - (0.5 / 2)) - 0.5, -0.5},
+
+                -- Stick --
+                {-0.18, (1 - (0.5 / 2)) - 0.5, -0.18, 0.18, -0.5, 0.18},
+            },
+        },
+
+        tiles = {
+
+            "tmcraftings_piston_frnt_glue.png",
+            "tmcraftings_piston_frnt.png"     ,
+            "tmcraftings_piston_on_top.png"   ,
+        },
+
+        drop = "tmcraftings:glue_piston",
+        
+        is_ground_content = false,
+        groups = {cracky = 5, not_in_creative_inventory = 1},
+
+        sounds = default.node_sound_metal_defaults(),
+
+        after_destruct = eletronics.break_brother
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:glue_piston",
+
+        recipe = {
+
+            {"tmcraftings:titanium", "tmcraftings:magic_dust", "tmcraftings:titanium"},
+            {"tmcraftings:silver"  , "tmcraftings:iron"      , "tmcraftings:silver"  },
+            {"tmcraftings:silver"  , "tmcraftings:silver"    , "tmcraftings:silver"  },
+        }
+    })
+
+-- Miscellaneous --
 function s_node(pos, name)
 
     local node = minetest.get_node(pos)

@@ -8,9 +8,8 @@ function default_timer(pos, elapsed)
     local dst = inv:get_list('dst')
     local ful = inv:get_list('fuel')
 
-    local cookitm, outpitm, fuel_tm, outfuel
-    cookitm, outpitm = minetest.get_craft_result({method = "cooking", width = 1, items = src})
-    fuel_tm, outfuel = minetest.get_craft_result({method = "fuel", width = 1, items = ful})
+    local cookitm, outpitm = minetest.get_craft_result({method = "cooking", width = 1, items = src})
+    local fuel_tm, outfuel = minetest.get_craft_result({method = "fuel", width = 1, items = ful})
 
     -- Refuel --
     if meta:get_float('fire') <= 0 and fuel_tm.time ~= 0 and cookitm.time ~= 0 then
@@ -31,6 +30,7 @@ function default_timer(pos, elapsed)
     -- timer == -1 means new cycle or no cycle --
     --                                         --
 
+    -- Successful crafting --
     if cookitm.time ~= 0 then
 
         local timer = meta:get_float('timer')
@@ -49,7 +49,7 @@ function default_timer(pos, elapsed)
 
             meta:set_string('formspec', get_gui('dfurnace', 100 - asize, fsize))
 
-            if timer <= 0 and cookitm.item.name == inv:get_stack('src', 1).name then
+            if timer <= 0 then
 
                 inv:set_stack('src', 1, outpitm.items[1])
                 inv:add_item('dst', cookitm.item)
@@ -83,8 +83,7 @@ function fuelless_timer(pos, elapsed)
     local src = inv:get_list('src')
     local dst = inv:get_list('dst')
 
-    local cookitm, outpitm
-    cookitm, outpitm = minetest.get_craft_result({method = "cooking", width = 1, items = src})
+    local cookitm, outpitm = minetest.get_craft_result({method = "cooking", width = 1, items = src})
 
     -- Reset arrow --
     if inv:get_stack('src', 1):get_count() == 0 then
@@ -97,6 +96,7 @@ function fuelless_timer(pos, elapsed)
     -- timer == -1 means new cycle or no cycle --
     --                                         --
 
+    -- Successful crafting --
     if cookitm.time ~= 0 then
 
         local timer = meta:get_float('timer')
@@ -118,6 +118,7 @@ function fuelless_timer(pos, elapsed)
                 inv:add_item('dst', cookitm.item)
                 
                 meta:set_float('timer', -1)
+                meta:set_string('formspec', get_gui('mfurnace', 0))
 
                 -- Keep burning --
                 if inv:get_stack('src', 1):get_count() > 0 then return true end
@@ -132,6 +133,91 @@ function fuelless_timer(pos, elapsed)
         end
     end
 end
+
+-- Boiler behaviour --
+function on_load_boiler(pos)
+
+    local meta = minetest.get_meta(pos)
+
+    meta:set_string('formspec', get_gui('mgboiler'))
+    meta:set_float('fuel', 0)
+
+    local inv = meta:get_inventory()
+    inv:set_size('src' , 4)
+end
+
+function boiler_behaviour(pos, elapsed)
+
+    local meta = minetest.get_meta(pos)
+    local inv  = meta:get_inventory()
+    local slots = inv:get_list('src')
+
+    local clit
+    for indx, fuel in pairs(slots) do
+    
+        if meta:get_float('fuel') <= 0 then
+
+            local time, outf = minetest.get_craft_result({
+
+                method = "fuel",
+                width  = 1     ,
+                items  = {fuel},
+            })
+
+            if time then
+
+                time = time.time
+
+                -- Give output --
+                inv:set_stack('src', indx, outf.items[1])
+
+                -- Update fuel time --
+                clit = meta:get_float('fuel')
+                meta:set_float('fuel', clit + time)
+                
+                return true
+            end
+        else return true end
+    end
+end
+
+-- Turn on --
+minetest.register_abm({
+
+    nodenames = {
+
+        'tmcraftings:magic_boiler'   ,
+        'tmcraftings:magic_boiler_on',
+    },
+
+    interval  = 1,
+    chance    = 1,
+    
+    action =
+    function(pos, node)
+        
+        local meta = minetest.get_meta(pos)
+        local clit = meta:get_float('fuel')
+
+        meta:set_float('fuel', clit - 1)
+        meta:set_string('infotext', 'fuel time left: ' .. (math.max(clit - 1, 0)))
+
+        if clit > 0 then
+            
+            if node.name ~= 'tmcraftings:magic_boiler_on' then
+            
+                s_node(pos, 'tmcraftings:magic_boiler_on')
+            end
+
+        else
+            
+            if node.name ~= 'tmcraftings:magic_boiler' then
+            
+                s_node(pos, 'tmcraftings:magic_boiler')
+            end
+        end
+    end
+})
 
 -- Furnace code from default --
 function is_diggable(pos)

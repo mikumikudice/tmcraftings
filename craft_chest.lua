@@ -88,7 +88,13 @@
                     ) then d_itm:set_count(math.random(1, 5))
                     
                     -- Fix duplicated tools bug --
-                    else d_itm:set_count(1) end
+                    else
+                        
+                        d_itm:set_count(1)
+                        
+                        -- Add random wearing --
+                        d_itm:add_wear(math.random(0.20 * 65535, 0.75 * 65535))
+                    end
 
                     inv:set_stack('main', i, d_itm)
                 end

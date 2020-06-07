@@ -874,39 +874,55 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         }
     })
 
-    -- Ledder --
-    minetest.register_node('tmcraftings:iron_ladder', {
+    -- Engine --
+    minetest.register_craftitem('tmcraftings:engine', {
 
-        description = "Iron Ladder",
+        description = "Mechanic Engine",
+        inventory_image = "tmcraftings_engine.png",
+        stack_max = 99,
 
-        drawtype = "signlike",
-        tiles = {"tmcraftings_iron_ladder.png"},
-        inventory_image = "tmcraftings_iron_ladder.png",
-        wield_image = "tmcraftings_iron_ladder.png",
-
-        paramtype = "light",
-        paramtype2 = "wallmounted",
-        sunlight_propagates = true,
-        is_ground_content = false,
-
-        walkable = false,
-        climbable = true,
-
-        selection_box = {type = "wallmounted"},
-
-        groups = {cracky = 4},
-        sounds = default.node_sound_metal_defaults(),
+        groups = {engine = 1}
     })
 
     minetest.register_craft({
 
-        output = "tmcraftings:iron_ladder",
+        output = "tmcraftings:engine",
 
         recipe = {
 
+            {""                , "tmcraftings:iron", ""                },
             {"tmcraftings:iron", ""                , "tmcraftings:iron"},
-            {"tmcraftings:iron", "tmcraftings:iron", "tmcraftings:iron"},
-            {"tmcraftings:iron", ""                , "tmcraftings:iron"},
+            {""                , "tmcraftings:iron", ""                },
+        }
+    })
+
+    -- Scrap --
+    minetest.register_craftitem('tmcraftings:scrap', {
+
+        description = "Scrap metal",
+        inventory_image = "tmcraftings_scrap.png",
+        stack_max = 99
+    })
+
+    -- Scrap engine --
+    minetest.register_craftitem('tmcraftings:scrap_engine', {
+
+        description = "Scrap Engine",
+        inventory_image = "tmcraftings_scrap_engine.png",
+        stack_max = 99,
+
+        groups = {engine = 1}
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:scrap_engine",
+
+        recipe = {
+
+            {"tmcraftings:scrap", ""                 , "tmcraftings:scrap"},
+            {""                 , "tmcraftings:scrap", ""                 },
+            {"tmcraftings:scrap", ""                 , "tmcraftings:scrap"},
         }
     })
 
@@ -980,7 +996,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         
             description = show_name .. " Armor Piece",
             inventory_image = "tmcraftings_" .. name .. "_piece.png",
-            stack_max = 18,
+            stack_max = 99,
 
             groups = {armor_piece = tyer}
         })
@@ -1029,10 +1045,9 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         })
 
         add_loot('tmcraftings:' .. name .. '_piece')
-        add_loot('tmcraftings:' .. name .. '_armor')
     end
 
---# miscellaneous ------------------------------------------#--
+--# Miscellaneous ------------------------------------------#--
 
     -- Stone stick --
     minetest.register_craftitem('tmcraftings:stone_stick', {
@@ -1044,9 +1059,9 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
     minetest.register_craft({
 
-        type = 'shapeless',
-        output = 'tmcraftings:stone_stick 4',
-        recipe = {'default:cobble'}
+        type = "shapeless",
+        output = "tmcraftings:stone_stick 4",
+        recipe = {"default:cobble"}
     })
 
     -- Vegetable coal --
@@ -1072,6 +1087,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         cooktime = 10,
     })
 
+    -- Torch --
     minetest.register_craft({
 
         type = "shapeless",
@@ -1099,8 +1115,61 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         output = 'tmcraftings:magic_core',
         recipe = {
             
-            {'', 'tmcraftings:silver', ''},
+            {''                  , 'tmcraftings:silver'       , ''                  },
             {'tmcraftings:silver', 'tmcraftings:magic_crystal', 'tmcraftings:silver'},
-            {'', 'tmcraftings:silver', ''},
+            {''                  , 'tmcraftings:silver'       , ''                  },
         },
+    })
+
+    -- Magic crystal dust --
+    minetest.register_craftitem('tmcraftings:magic_dust', {
+        
+        description = "Magic Crystal Dust",
+        inventory_image = "tmcraftings_magic_dust.png",
+        stack_max = 99
+    })
+
+    minetest.register_craft({
+
+        type = "shapeless",
+        output = "tmcraftings:magic_dust 6",
+        recipe = {"tmcraftings:magic_crystal"}
+    })
+
+    -- Witchering Unit --
+    minetest.register_craftitem('tmcraftings:wcu', {
+        
+        description = "Witchering Unit",
+        inventory_image = "tmcraftings_wcu.png",
+        stack_max = 64
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:wcu 8",
+        recipe = {
+
+            {'tmcraftings:silver', 'tmcraftings:gold'      , 'tmcraftings:silver'},
+            {'tmcraftings:gold'  , 'tmcraftings:magic_dust', 'tmcraftings:gold'  },
+            {'tmcraftings:silver', 'tmcraftings:gold'      , 'tmcraftings:silver'},
+        }
+    })
+
+    -- Clock Engine --
+    minetest.register_craftitem('tmcraftings:clock_engine', {
+        
+        description = "Clock Engine",
+        inventory_image = "tmcraftings_clock_engine.png",
+        stack_max = 99
+    })
+
+    minetest.register_craft({
+
+        output = "tmcraftings:clock_engine",
+        recipe = {
+
+            {'group:wood'  , 'group:engine'             , 'group:wood'  },
+            {'group:engine', 'tmcraftings:magic_crystal', 'group:engine'},
+            {'group:wood'  , 'group:engine'             , 'group:wood'  },
+        }
     })

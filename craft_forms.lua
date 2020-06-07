@@ -114,6 +114,16 @@ function get_gui(name, item_pc, fuel_pc, data)
         .. (arrw) .. ":gui_furnace_arrow_fg.png^[transformR270]"
         .. def_inv
 
+    local blr_gui =
+        
+        [[
+        size[8.5,8.5]
+
+        list[current_player;auxi;0.75,0.5;1,3;0]
+        list[context;src;3.25,1.0;2,2]
+        ]]
+        .. def_inv
+        
     local cht_gui =
         
         [[
@@ -145,6 +155,7 @@ function get_gui(name, item_pc, fuel_pc, data)
 
     if name == 'dfurnace' then return dfr_gui end
     if name == 'mfurnace' then return mfr_gui end
+    if name == 'mgboiler' then return blr_gui end
     if name == 'defchest' then return cht_gui end
     if name == 'defanvil' then return anv_gui end
 end
