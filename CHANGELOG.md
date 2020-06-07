@@ -1,3 +1,7 @@
+## 2.1
+\+ Missing Anvil recipe
+\* Redundancy between iron and silver in magic items' recipes.
+
 ### 2.0
 \+ Magic circuits update (redstonelike)
 
