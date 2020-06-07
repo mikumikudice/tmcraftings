@@ -1,3 +1,6 @@
+## 2.2
+\* Fixed Magic Postlight recipe
+
 ## 2.1
 \+ Missing Anvil recipe<br/>
 \* Redundancy between iron and silver in magic items' recipes.<br/>
