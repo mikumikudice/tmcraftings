@@ -15,12 +15,14 @@ end
 
 function minetest.facedir_to_pos(facedir)
 
-    if facedir == 12 then                  return {['x'] = 01, ['y'] = 00, ['z'] = 00} end -- x+ 
-    if facedir == 18 then                  return {['x'] = -1, ['y'] = 00, ['z'] = 00} end -- x-
-    if facedir == 01 or facedir == 00 then return {['x'] = 00, ['y'] = 01, ['z'] = 00} end -- y+
-    if facedir == 23 or facedir == 20 then return {['x'] = 00, ['y'] = -1, ['z'] = 00} end -- y-
-    if facedir == 07 then                  return {['x'] = 00, ['y'] = 00, ['z'] = 01} end -- z+
-    if facedir == 09 then                  return {['x'] = 00, ['y'] = 00, ['z'] = -1} end -- z-
+    facedir = math.floor(facedir / 4)
+
+    if facedir == 03 then return {['x'] = 01, ['y'] = 00, ['z'] = 00} end -- x+ 
+    if facedir == 04 then return {['x'] = -1, ['y'] = 00, ['z'] = 00} end -- x-
+    if facedir == 00 then return {['x'] = 00, ['y'] = 01, ['z'] = 00} end -- y+
+    if facedir == 05 then return {['x'] = 00, ['y'] = -1, ['z'] = 00} end -- y-
+    if facedir == 01 then return {['x'] = 00, ['y'] = 00, ['z'] = 01} end -- z+
+    if facedir == 02 then return {['x'] = 00, ['y'] = 00, ['z'] = -1} end -- z-
 end
 
 function sum_pos(pos1, pos2)
@@ -67,7 +69,7 @@ end
 
                 if not pdir then
                     
-                    minetest.chat_send_all(tostring(node.param2))
+                    minetest.chat_send_all('an unexpected error occurred, please report the PPB ' .. (math.floor(node.param2 / 4)) .. ' error')
                     return nil
                 end
 
@@ -552,7 +554,8 @@ end
             [0] = 'AND' ,
             [1] = 'NAND',
             [2] = 'OR'  ,
-            [3] = 'XOR' ,
+            [3] = 'NOR' ,
+            [4] = 'XNOR',
         }
 
         function eletronics.on_load_thinker(pos)
@@ -644,11 +647,25 @@ end
                     ['oi'] = not zp_door and zm_door,
                 },
 
+                ['NOR']  = {
+
+                    ['on'] = not zp_door and not zm_door,
+                    ['io'] = not zp_door and zm_door    ,
+                    ['oi'] = zp_door and not zm_door    ,
+                },
+
                 ['XOR']  = {
 
                     ['on'] = (not zp_door or not zm_door) and not (not zp_door and not zm_door),
                     ['io'] = zp_door and zm_door        ,
                     ['oi'] = not zp_door and not zm_door,
+                },
+
+                ['XNOR']  = {
+
+                    ['on'] = (zp_door and zm_door) or (not zp_door and not zm_door),
+                    ['io'] = not zp_door and zm_door,
+                    ['oi'] = zp_door and not zm_door,
                 },
             }
 
