@@ -62,8 +62,8 @@ end
 
         -- Push node --
         function eletronics.piston_behaviour(pos, node)
-                
-            if minetest.find_node_near(pos, 2, "group:deliver") then
+            
+            if minetest.find_node_near(pos, 1, "group:deliver") then
 
                 local pdir   = minetest.facedir_to_pos(node.param2)
 
@@ -124,7 +124,7 @@ end
             action =
             function(pos, node)
                 
-                if not minetest.find_node_near(pos, 2, "group:deliver") then
+                if not minetest.find_node_near(pos, 1, "group:deliver") then
 
                     local pdir      = minetest.facedir_to_pos(node.param2)
                     local self_part = sub_pos(pos, pdir)
@@ -145,21 +145,22 @@ end
             action =
             function(pos, node)
                 
-                if not minetest.find_node_near(pos, 2, "group:deliver") then
+                if not minetest.find_node_near(pos, 1, "group:deliver") then
 
                     local pdir   = minetest.facedir_to_pos(node.param2)
                     local ps_pos = sum_pos(pos, pdir)
-                    local ab_pos = sum_pos(tp_pos, pdir)
+                    local ab_pos = sum_pos(ps_pos, pdir)
+                    
+                    s_node(pos, 'tmcraftings:glue_piston')
 
                     local pushed = minetest.get_node(ab_pos)
                     local pushed_meta = minetest.get_meta(ab_pos)
 
                     minetest.set_node(ps_pos, pushed)
 
-                    local default_node = minetest.get_meta(ps_pos)
-                    default_node:from_table(pushed_meta:to_table())
-                    
-                    minetest.s_node(pos, 'tmcraftings:glue_piston')
+                    pushed = minetest.get_meta(ps_pos)
+                    pushed:from_table(pushed_meta:to_table())
+
                     minetest.set_node(ab_pos, {name = 'air'})
                 end
             end
