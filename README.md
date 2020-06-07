@@ -7,10 +7,10 @@ Current version: 2.0
 
 ### 2.0 Update news
 
-+ Magic circuits system update
-+ Gold and Cursed Ruby
-- Furnaces progress bug
-* Obsidian mining tyer
+\+ Magic circuits system update<br/>
+\+ Gold and Cursed Ruby<br/>
+\- Furnaces progress bug<br/>
+\* Obsidian mining tyer<br/>
 <br/>
 This is the official repository for the Too Many Craftings (tmcraftings) mod for the Minetest game.
 Read `readme.txt` for more informations about the mod.
