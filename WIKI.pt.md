@@ -240,5 +240,5 @@ Cria um inventário exclusivo pra cada jogador que interage. Não perde o conte�
 Receita:
 
     titanium titanium titanium
-    titanium crystal_ titanium
+    __wood__ __core__ __wood__
     titanium titanium titanium
