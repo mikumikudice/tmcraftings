@@ -2536,12 +2536,12 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     minetest.register_craft({
 
-        output = 'tmcraftings:magic_postlight_off',
+        output = "tmcraftings:magic_postlight",
         recipe = {
             
-            {'', 'tmcraftings:silver', ''},
-            {'default:glass', 'tmcraftings:magic_crystal', 'default:glass'},
-            {'', 'tmcraftings:silver', ''},
+            {""             , "group:tech_material"      , ""             },
+            {"default:glass", "tmcraftings:magic_crystal", "default:glass"},
+            {""             , "group:tech_material"      , ""             },
         },
     })
 
