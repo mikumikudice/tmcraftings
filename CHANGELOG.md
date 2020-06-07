@@ -1,6 +1,6 @@
 ## 2.3
-- Piston crashing game
-+ Glue piston works in all directions
+\- Piston crashing game
+\+ Glue piston works in all directions
 
 ## 2.2
 \* Fixed Magic Postlight recipe
