@@ -1,7 +1,6 @@
 ## 2.1
-\+ Missing Anvil recipe
-\* Redundancy between iron and silver in magic items' recipes.
-\* Commit error
+\+ Missing Anvil recipe<br/>
+\* Redundancy between iron and silver in magic items' recipes.<br/>
 
 ### 2.0
 \+ Magic circuits update (redstonelike)
