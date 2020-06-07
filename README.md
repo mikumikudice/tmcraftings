@@ -1,14 +1,16 @@
 ## Too Many Craftings [tmcraftings]
 Copyright (C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
 
-Current version: 1.5
+Current version: 2.0
 
 <img src= "screenshot.png">
 
-### 1.5 Update news
+### 2.0 Update news
 
-+ Iron, Tungsten and Titanium Armors
-+ Anvil
++ Magic circuits system update
++ Gold and Cursed Ruby
+- Furnaces progress bug
+* Obsidian mining tyer
 <br/>
 This is the official repository for the Too Many Craftings (tmcraftings) mod for the Minetest game.
 Read `readme.txt` for more informations about the mod.
