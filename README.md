@@ -1,7 +1,7 @@
 ## Too Many Craftings [tmcraftings]
 Copyright (C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
 
-Current version: 2.0
+Current version: 2.1
 
 <img src= "screenshot.png">
 
