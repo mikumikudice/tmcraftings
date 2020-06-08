@@ -15,6 +15,8 @@ Current version: 2.3
 This is the official repository for the Too Many Craftings (tmcraftings) mod for the Minetest game.
 Read `readme.txt` for more informations about the mod.
 
+[[Mod Wiki](https://github.com/PixetBits/tmcraftings/blob/master/WIKI.pt.md)]
+
 ## License
 Code:<br/>
 Copyright(c) 2020 PixetBits<br/>
