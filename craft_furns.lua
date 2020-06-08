@@ -12,7 +12,9 @@ function default_timer(pos, elapsed)
     local fuel_tm, outfuel = minetest.get_craft_result({method = "fuel", width = 1, items = ful})
 
     -- Refuel --
-    if meta:get_float('fire') <= 0 and fuel_tm.time ~= 0 and cookitm.time ~= 0 then
+    if meta:get_float('fire') <= 0 and fuel_tm.time ~= 0 then
+
+        minetest.chat_send_all('refuelling')
 
         meta:set_float('fire', fuel_tm.time)
         meta:set_float('fmax', fuel_tm.time)

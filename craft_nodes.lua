@@ -937,7 +937,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                 minetest.sound_play('default_chest_open', {
 
                     gain = 0.3,
-                    pos = pos,
+                    pos  = pos,
                     max_hear_distance = 10
 
                 }, true)
@@ -1401,7 +1401,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                 minetest.sound_play('doors_steel_door_open', {
 
                     gain = 0.3,
-                    pos = pos,
+                    pos  = pos,
                     max_hear_distance = 10
 
                 }, true)
@@ -1536,22 +1536,21 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
-        
-        light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
         groups = {cracky = 5},
 
         sounds = default.node_sound_metal_defaults(),
 
+        on_construct  = eletronics.on_load_device,
         on_rightclick =
         function(pos)
             
             minetest.sound_play('doors_steel_door_close', {
 
                 gain = 0.3,
-                pos = pos,
-                max_hear_distance = 5
+                pos  = pos,
+                max_hear_distance = 10
         
             }, true)
 
@@ -1612,8 +1611,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             minetest.sound_play('doors_steel_door_close', {
 
                 gain = 0.3,
-                pos = pos,
-                max_hear_distance = 5
+                pos  = pos,
+                max_hear_distance = 10
         
             }, true)
 
@@ -1802,9 +1801,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 5},
+        groups = {cracky = 5, pwr_deliver = 1},
 
-        sounds = default.node_sound_metal_defaults()
+        sounds = default.node_sound_metal_defaults(),
+        on_construct = eletronics.on_load_device
     })
 
     minetest.register_node('tmcraftings:disperser_on', {
@@ -1825,7 +1825,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, deliver = 1, not_in_creative_inventory = 1},
+        groups = {cracky = 5, deliver = 1, pwr_deliver = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults()
     })
@@ -1870,9 +1870,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         is_ground_content = false,
 
         is_ground_content = false,
-        groups = {cracky = 5, source = 2, wire = 2},
+        groups = {cracky = 5, source = 2, wire = 2, pwr_deliver = 1},
 
         sounds = default.node_sound_metal_defaults(),
+
+        on_construct = eletronics.on_load_device,
 
         -- Clear meta to avoid phantom charge --
         on_destruct = eletronics.on_break_wite
@@ -1898,12 +1900,14 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             "tmcraftings_post_on.png"    ,
         },
 
+        drop = "mcraftings:post",
+
         paramtype = "light",
         sunlight_propagates = true,
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, deliver = 1, source = 2, wire = 2, not_in_creative_inventory = 1},
+        groups = {cracky = 5, deliver = 1, source = 2, wire = 2, pwr_deliver = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults(),
 
@@ -1954,6 +1958,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         groups = {choppy = 1, wire = 1, source = 2},
         sounds = default.node_sound_stone_defaults(),
 
+        on_construct = eletronics.on_load_device,
+
         -- Clear meta to avoid phantom charge --
         on_destruct = eletronics.on_break_wite
     })
@@ -1990,7 +1996,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 5},
+        groups = {cracky = 5, thinker = 1},
 
         sounds = default.node_sound_metal_defaults(),
 
@@ -2019,7 +2025,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, not_in_creative_inventory = 1},
+        groups = {cracky = 5, thinker = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults(),
 
@@ -2037,7 +2043,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             'tmcraftings_silver_block.png^tmcraftings_component.png' ,
 
             'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
-            'tmcraftings_silver_block.png.png',
+            'tmcraftings_silver_block.png',
 
             'tmcraftings_silver_block.png^tmcraftings_thinker.png'   ,
             'tmcraftings_silver_block.png^tmcraftings_thinker_on.png',
@@ -2048,7 +2054,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, not_in_creative_inventory = 1},
+        groups = {cracky = 5, thinker = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults(),
 
@@ -2077,7 +2083,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, source = 2, depends = 1, not_in_creative_inventory = 1},
+        groups = {cracky = 5, source = 2, depends = 1, thinker = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults(),
 
@@ -2115,9 +2121,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 5, source = 2, depends = 1},
+        groups = {cracky = 5, source = 2, depends = 1, inverser = 1},
 
-        sounds = default.node_sound_metal_defaults()
+        sounds = default.node_sound_metal_defaults(),
+        on_construct = eletronics.on_load_device
     })
 
     minetest.register_node('tmcraftings:inverser_on', {
@@ -2137,7 +2144,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, not_in_creative_inventory = 1},
+        groups = {cracky = 5, inverser = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults()
     })
@@ -2169,9 +2176,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 5},
+        groups = {cracky = 5, mgate = 1},
 
-        sounds = default.node_sound_metal_defaults()
+        sounds = default.node_sound_metal_defaults(),
+        on_construct = eletronics.on_load_device
     })
 
     minetest.register_node('tmcraftings:magic_gate_on', {
@@ -2190,7 +2198,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, source = 2, depends = 1, not_in_creative_inventory = 1},
+        groups = {cracky = 5, source = 2, depends = 1, mgate = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults()
     })
@@ -2285,9 +2293,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         is_ground_content = false,
-        groups = {cracky = 5},
+        groups = {cracky = 5, solar_panel = 1},
 
-        sounds = default.node_sound_metal_defaults()
+        sounds = default.node_sound_metal_defaults(),
+        on_construct = eletronics.on_load_device
     })
 
     minetest.register_node('tmcraftings:solar_on', {
@@ -2315,7 +2324,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         light_source = default.LIGHT_MAX / 2,
 
         is_ground_content = false,
-        groups = {cracky = 5, source = 1, battery = 1, not_in_creative_inventory = 1},
+        groups = {cracky = 5, source = 1, battery = 1, solar_panel = 1, not_in_creative_inventory = 1},
 
         sounds = default.node_sound_metal_defaults()
     })
@@ -2610,6 +2619,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         sounds = default.node_sound_metal_defaults(),
 
         on_place = minetest.rotate_node,
+        
+        on_construct   = eletronics.on_load_device,
         after_destruct = eletronics.break_brother
     })
 
@@ -2636,8 +2647,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             "tmcraftings_piston_on_bot.png",
         },
 
-        drop = "tmcraftings:piston",
-        paramtype2 = 'facedir',
+        paramtype = "light",
+        sunlight_propagates = true,
 
         is_ground_content = false,
         groups = {cracky = 5, not_in_creative_inventory = 1},
@@ -2672,6 +2683,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         drop = "tmcraftings:piston",
         paramtype2 = 'facedir',
+
+        paramtype = "light",
+        sunlight_propagates = true,
         
         is_ground_content = false,
         groups = {cracky = 5, not_in_creative_inventory = 1},
@@ -2705,11 +2719,16 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             'tmcraftings_piston_side.png'     ,
         },
 
+        paramtype2 = 'facedir',
+
         is_ground_content = false,
         groups = {cracky = 5},
 
         sounds = default.node_sound_metal_defaults(),
 
+        on_place = minetest.rotate_node,
+
+        on_construct   = eletronics.on_load_device,
         after_destruct = eletronics.break_brother
     })
 
@@ -2737,6 +2756,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         drop = "tmcraftings:glue_piston",
+        paramtype2 = 'facedir',
 
         is_ground_content = false,
         groups = {cracky = 5, not_in_creative_inventory = 1},
@@ -2770,6 +2790,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         },
 
         drop = "tmcraftings:glue_piston",
+        paramtype2 = 'facedir',
+
+        paramtype = "light",
+        sunlight_propagates = true,
         
         is_ground_content = false,
         groups = {cracky = 5, not_in_creative_inventory = 1},

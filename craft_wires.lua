@@ -1,5 +1,7 @@
 -- Battery -> Wire -> Disperser -> Node --
 eletronics = {}
+
+eletronics.ldd_dev = {}
 eletronics.devices = {
 
     "tmcraftings:mfurnace"       , "tmcraftings:mfurnace_on"       ,
@@ -13,6 +15,103 @@ function eletronics.add_device(node)
     table.insert(node, node .. '_on')
 end
 
+-- Mod storange functions --
+local storange = minetest.get_worldpath() .. '/wires_meta.lua'
+
+function eletronics.on_load_device(pos)
+
+    pos = {['x'] = pos.x, ['y'] = pos.y, ['z'] = pos.z}
+    table.insert(eletronics.ldd_dev, pos)
+end
+
+function eletronics.every_tick()
+
+    for _, pos in pairs(eletronics.ldd_dev) do
+        
+        local node = minetest.get_node(pos)
+
+        -- Wire behaviour --
+        if minetest.get_node_group(node.name, 'wire') ~= 0 then
+
+            eletronics.wires_behaviour(pos, node)
+        end
+
+        -- Power Delivery --
+        if minetest.get_node_group(node.name, 'pwr_deliver') ~= 0 then
+
+            eletronics.get_source(pos, node)
+        end
+
+        -- Magic Gate --
+        if minetest.get_node_group(node.name, 'mgate') ~= 0 then
+
+            eletronics.gate(pos, node)
+        end
+
+        -- Thinker --
+        if minetest.get_node_group(node.name, 'thinker') ~= 0 then
+
+            eletronics.thinker(pos, node)
+        end
+
+        -- Inverser --
+        if minetest.get_node_group(node.name, 'inverser') ~= 0 then
+
+            eletronics.inverser(pos, node)
+        end
+
+        -- Solar panel --
+        if minetest.get_node_group(node.name, 'solar_panel') ~= 0 then
+
+            eletronics.solar_bahaviour(pos, node)
+        end
+
+        -- Turn on piston --
+        if node.name == "tmcraftings:piston"
+        or node.name == "tmcraftings:glue_piston" then
+            
+            eletronics.piston_behaviour(pos, node)
+        end
+
+        -- Turn off piston --
+        if node.name == "tmcraftings:piston_bot" then
+
+            if not minetest.find_node_near(pos, 1, "group:deliver") then
+
+                local pdir      = minetest.facedir_to_pos(node.param2)
+                local self_part = sub_pos(pos, pdir)
+                
+                s_node(pos, 'tmcraftings:piston')
+                minetest.set_node(self_part, {name = 'air'})
+            end
+        end
+
+        -- Turn off (Glue) --
+        if node.name == "tmcraftings:glue_piston_bot" then
+            
+            if not minetest.find_node_near(pos, 1, "group:deliver") then
+
+                local pdir   = minetest.facedir_to_pos(node.param2)
+                local ps_pos = sum_pos(pos, pdir)
+                local ab_pos = sum_pos(ps_pos, pdir)
+                
+                s_node(pos, 'tmcraftings:glue_piston')
+
+                local pushed = minetest.get_node(ab_pos)
+                local pushed_meta = minetest.get_meta(ab_pos)
+
+                minetest.set_node(ps_pos, pushed)
+
+                pushed = minetest.get_meta(ps_pos)
+                pushed:from_table(pushed_meta:to_table())
+
+                minetest.set_node(ab_pos, {name = 'air'})
+            end
+        end
+    end
+end
+
+-- Piston 6d functions --
 function minetest.facedir_to_pos(facedir)
 
     facedir = math.floor(facedir / 4)
@@ -35,7 +134,7 @@ function sub_pos(pos1, pos2)
     return {['x'] = pos1.x - pos2.x, ['y'] = pos1.y - pos2.y, ['z'] = pos1.z - pos2.z}
 end
 
---# Powered Nodes ------------------------------------------#--
+--# ABMs ---------------------------------------------------#--
 
     -- Turn on --
     minetest.register_abm({
@@ -99,73 +198,6 @@ end
             end
         end
 
-        -- Turn on --
-        minetest.register_abm({
-
-            nodenames = {
-                
-                'tmcraftings:piston',
-                'tmcraftings:glue_piston'
-            },
-            
-            interval  = 1,
-            chance    = 1,
-            
-            action = eletronics.piston_behaviour
-        })
-
-        -- Turn off --
-        minetest.register_abm({
-
-            nodenames = {'tmcraftings:piston_bot'},
-            interval  = 1,
-            chance    = 1,
-            
-            action =
-            function(pos, node)
-                
-                if not minetest.find_node_near(pos, 1, "group:deliver") then
-
-                    local pdir      = minetest.facedir_to_pos(node.param2)
-                    local self_part = sub_pos(pos, pdir)
-                    
-                    s_node(pos, 'tmcraftings:piston')
-                    minetest.set_node(self_part, {name = 'air'})
-                end
-            end
-        })
-
-        -- Turn off (Glue) --
-        minetest.register_abm({
-
-            nodenames = {'tmcraftings:glue_piston_bot'},
-            interval  = 1,
-            chance    = 1,
-            
-            action =
-            function(pos, node)
-                
-                if not minetest.find_node_near(pos, 1, "group:deliver") then
-
-                    local pdir   = minetest.facedir_to_pos(node.param2)
-                    local ps_pos = sum_pos(pos, pdir)
-                    local ab_pos = sum_pos(ps_pos, pdir)
-                    
-                    s_node(pos, 'tmcraftings:glue_piston')
-
-                    local pushed = minetest.get_node(ab_pos)
-                    local pushed_meta = minetest.get_meta(ab_pos)
-
-                    minetest.set_node(ps_pos, pushed)
-
-                    pushed = minetest.get_meta(ps_pos)
-                    pushed:from_table(pushed_meta:to_table())
-
-                    minetest.set_node(ab_pos, {name = 'air'})
-                end
-            end
-        })
-
         -- Break itself --
         function eletronics.break_brother(pos, node)
 
@@ -193,7 +225,7 @@ end
             end
         end
 
---# Power Delivery -----------------------------------------#--
+--# Behaviours ---------------------------------------------#--
 
     function eletronics.meta_to_pos(str)
         
@@ -459,6 +491,7 @@ end
                 other_meta:set_string('power', '')
             end
         end
+
     --# Magic Gate behaviour -------------------------------#--
 
         function eletronics.gate(pos, node)
@@ -500,20 +533,6 @@ end
             -- Close the gate --
             else s_node(pos, node.name:gsub('_on', '')) end
         end
-
-        minetest.register_abm({
-            
-            nodenames = {
-                
-                "tmcraftings:magic_gate",
-                "tmcraftings:magic_gate_on"
-            },
-
-            interval  = 1,
-            chance    = 1,
-
-            action = eletronics.gate
-        })
 
     --# Magic Tic behaviour --------------------------------#--
 
@@ -561,6 +580,8 @@ end
 
         function eletronics.on_load_thinker(pos)
             
+            eletronics.on_load_device({['x'] = pos.x, ['y'] = pos.y, ['z'] = pos.z})
+
             local meta = minetest.get_meta(pos)
 
             meta:set_int('config', 0)
@@ -723,70 +744,37 @@ end
             else minetest.set_node(pos, {name = node.name:gsub('_on', '')}) end
         end
 
-    -- Wires --
-    minetest.register_abm({
+--# Callbacks ----------------------------------------------#--
 
-        nodenames = {"group:wire"},
-        interval  = 1,
-        chance    = 1,
+    minetest.register_globalstep(eletronics.every_tick)
 
-        action = eletronics.wires_behaviour
-    })
+    -- Load devices' position --
+    minetest.register_on_joinplayer(function()
 
-    -- Power delivevers --
-    minetest.register_abm({
-
-        nodenames = {
-
-            "tmcraftings:disperser", "tmcraftings:disperser_on",
-            "tmcraftings:post"     , "tmcraftings:post_on"     ,
-        },
-
-        interval  = 1,
-        chance    = 1,
-
-        action = eletronics.get_source
-    })
-
-    -- Thinker --
-    minetest.register_abm({
-
-        nodenames = {
+        file = io.open(storange)
+        if file then
             
-            "tmcraftings:thinker"   , "tmcraftings:thinker_on", 
-            "tmcraftings:thinker_OI", "tmcraftings:thinker_IO",
-        },
+            dofile(storange)
+        end
+    end)
 
-        interval  = 1,
-        chance    = 1,
+    -- Store deivces' position --
+    minetest.register_on_shutdown(function()
 
-        action = eletronics.thinker
-    })
+        local meta = io.open(storange, 'w')
+        local data = "eletronics.ldd_dev = {"
 
-    -- Inverser --
-    minetest.register_abm({
+        for _, pos in pairs(eletronics.ldd_dev) do
+            
+            data = data .. "{['x']=" .. (pos.x)
+                        .. ",['y']=" .. (pos.y)
+                        .. ",['z']=" .. (pos.z)
+                        .. '},'
+        end
+
+        data = data .. "}"
+
+        meta:write(data)
+        io.close(meta)
+    end)
         
-        nodenames = {
-            
-            "tmcraftings:inverser", "tmcraftings:inverser_on", 
-        },
-
-        interval  = 1,
-        chance    = 1,
-
-        action = eletronics.inverser
-    })
-
-    -- Solar panel --
-    minetest.register_abm({
-        
-        nodenames = {
-            
-            "tmcraftings:solar", "tmcraftings:solar_on", 
-        },
-
-        interval  = 1,
-        chance    = 1,
-
-        action = eletronics.solar_bahaviour
-    })
