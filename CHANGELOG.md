@@ -1,3 +1,8 @@
+## 2.4
+\- Furnace refuel bug
+\- Magic Post drop bug
+\* Magic Circuits lit instantly
+
 ## 2.3
 \- Piston crashing game<br/>
 \+ Glue piston works in all directions
