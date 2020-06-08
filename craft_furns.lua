@@ -14,8 +14,6 @@ function default_timer(pos, elapsed)
     -- Refuel --
     if meta:get_float('fire') <= 0 and fuel_tm.time ~= 0 then
 
-        minetest.chat_send_all('refuelling')
-
         meta:set_float('fire', fuel_tm.time)
         meta:set_float('fmax', fuel_tm.time)
         inv:set_stack('fuel', 1, outfuel.items[1])
