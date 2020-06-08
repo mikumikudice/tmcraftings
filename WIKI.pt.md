@@ -226,7 +226,23 @@ Receita:
     Fe/Ag Fe/Ag Fe/Ag
     ruby_ dust_ dust_
     Fe/Ag Fe/Ag Fe/Ag
+
+## Pistão
+Empurra o bloco ao qual está apontado, se possível, quando energizado.<br/>
+Receita:
+
+    titanium titanium titanium
+    _Fe/Ag__ _engine_ _Fe/Ag__
+    _Fe/Ag__ _Fe/Ag__ _Fe/Ag__
     
+## Pistão com Cola
+Empurra o bloco ao qual está apontado, se possível, quando energizado, e o puxa novamente à posição original quando não.<br/>
+Receita:
+
+    titanium __dust__ titanium
+    _Fe/Ag__ _engine_ _Fe/Ag__
+    _Fe/Ag__ _Fe/Ag__ _Fe/Ag__    
+
 ## Fornálha Mágica
 Cozinha itens sem combustível.<br/>
 Receita:
