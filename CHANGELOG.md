@@ -1,6 +1,6 @@
 ## 2.4
-\- Furnace refuel bug
-\- Magic Post drop bug
+\- Furnace refuel bug<br/>
+\- Magic Post drop bug<br/>
 \* Magic Circuits lit instantly
 
 ## 2.3
