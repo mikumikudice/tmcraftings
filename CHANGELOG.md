@@ -1,3 +1,7 @@
+## 2.5
+\+ Optimization on wires metadata storage system<br/>
+\+ Recovering resources system (slabs to blocks)
+
 ## 2.4
 \- Furnace refuel bug<br/>
 \- Magic Post drop bug<br/>
