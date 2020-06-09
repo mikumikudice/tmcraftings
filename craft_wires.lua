@@ -15,8 +15,8 @@ function eletronics.add_device(node)
     table.insert(node, node .. '_on')
 end
 
--- Mod storange functions --
-local storange = minetest.get_worldpath() .. '/wires_meta.lua'
+-- Mod storage functions --
+local storage = minetest.get_worldpath() .. '/wires_meta.lua'
 
 function eletronics.on_load_device(pos)
 
@@ -757,17 +757,17 @@ end
     -- Load devices' position --
     minetest.register_on_joinplayer(function()
 
-        file = io.open(storange)
+        file = io.open(storage)
         if file then
             
-            dofile(storange)
+            dofile(storage)
         end
     end)
 
     -- Store deivces' position --
     minetest.register_on_shutdown(function()
 
-        local meta = io.open(storange, 'w')
+        local meta = io.open(storage, 'w')
         local data = "eletronics.ldd_dev = {"
 
         for _, pos in pairs(eletronics.ldd_dev) do
