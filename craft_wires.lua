@@ -754,10 +754,10 @@ end
 
     minetest.register_globalstep(eletronics.every_tick)
 
-    -- Load devices' position --
-    minetest.register_on_joinplayer(function()
+    -- Load devices' positions --
+    minetest.register_on_mods_loaded(function()
 
-        file = io.open(storage)
+        local file = io.open(storage)
         if file then
             
             dofile(storage)
