@@ -571,40 +571,19 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 --# Replace Obsidian ---------------------------------------#--
 
     -- For every obsidian variant -- 
-    for _, name in pairs({'obsidian', 'obsidianbrick', 'obsidian_block', 'obsidian_glass'}) do
+    for _, node in pairs(minetest.registered_nodes) do
 
-        -- Replace blocks --
-        minetest.override_item('default:' .. name, {
-    
-            groups = {cracky = 7},
-            on_blast = function() return nil end
-        })
+        local name = node.name
 
-        -- Replace stairs --
-        minetest.override_item('stairs:stair_' .. name, {
+        if name:find('obsidian') then
 
-            groups = {cracky = 7},
-            on_blast = function() return nil end
-        })
-
-        minetest.override_item('stairs:stair_inner_' .. name, {
-
-            groups = {cracky = 7},
-            on_blast = function() return nil end
-        })
-
-        minetest.override_item('stairs:stair_outer_' .. name, {
-
-            groups = {cracky = 7},
-            on_blast = function() return nil end
-        })
-
-        -- Replace slab --
-        minetest.override_item('stairs:slab_' .. name, {
-
-            groups = {cracky = 7},
-            on_blast = function() return nil end
-        })
+            -- Replace blocks --
+            minetest.override_item(name, {
+        
+                groups = {cracky = 7},
+                on_blast = function() return nil end
+            })
+        end
     end
 
 --# Replace bones ------------------------------------------#--
@@ -1361,6 +1340,15 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             {'default:cobble', 'default:cobble', 'default:cobble', 'default:cobble'},
         },
     })
+
+    -- Slab to block --
+    minetest.register_craft({
+
+        type   = "shapeless"  ,
+        output = "group:stone",
+        recipe = {"group:slab", "group:slab"}
+    })
+
 
 --# Enchanted Chest ----------------------------------------#--
 

@@ -26,9 +26,15 @@ end
 
 function eletronics.every_tick()
 
-    for _, pos in pairs(eletronics.ldd_dev) do
+    for i, pos in pairs(eletronics.ldd_dev) do
         
         local node = minetest.get_node(pos)
+
+        -- Pop removed devices --
+        if node.name == 'air' then
+            
+            eletronics.ldd_dev[i] = nil
+        end
 
         -- Wire behaviour --
         if minetest.get_node_group(node.name, 'wire') ~= 0 then
