@@ -1,9 +1,14 @@
 ## Too Many Craftings [tmcraftings]
 Copyright (C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
 
-Current version: 2.5
+Current version: 2.6
 
 <img src= "screenshot.png">
+
+### 2.6 Update
+\- Lot of tiny bugs
+\* Changed some textures (pistons and enchanted chest)
+\* )ther changes in the code
 
 ### 2.0 Update news
 
