@@ -6,9 +6,9 @@ Current version: 2.6
 <img src= "screenshot.png">
 
 ### 2.6 Update
-\- Lot of tiny bugs
-\* Changed some textures (pistons and enchanted chest)
-\* )ther changes in the code
+\- Lot of tiny bugs<br/>
+\* Changed some textures (pistons and enchanted chest)<br/>
+\* )ther changes in the code<br/>
 
 ### 2.0 Update news
 
