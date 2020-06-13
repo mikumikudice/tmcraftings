@@ -1,3 +1,19 @@
+### 2.6
+\- Lot of tiny bugs
+
+  * Piston cracking
+  * Furnace behaviour
+  * Missing recipes
+  * Other unlisted bugs
+  
+\* Changed textures
+
+  * Piston (including nodebox shape)
+  * Glue Piston (including nodebox shape)
+  * Enchanted Chest
+  
+\* Other changes in the code (readability, syntax, etc)<br/>
+
 ## 2.5
 \+ Optimization on wires metadata storage system<br/>
 \+ Recovering resources system (slabs to blocks)
