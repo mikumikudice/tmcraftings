@@ -145,7 +145,7 @@ function close_chest(sound)
     minetest.sound_play(sound or 'default_chest_close', {
 
         gain = 0.3,
-        pos = pos,
+        pos  = pos,
         max_hear_distance = 10
 
     }, true)

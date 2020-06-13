@@ -754,7 +754,7 @@ end
 
     minetest.register_globalstep(eletronics.every_tick)
 
-    -- Load devices' positions --
+    -- Load devices' position --
     minetest.register_on_mods_loaded(function()
 
         local file = io.open(storage)

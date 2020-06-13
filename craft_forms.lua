@@ -44,12 +44,12 @@ minetest.register_on_joinplayer(function(char)
     end
 end)
 
-minetest.register_on_dieplayer(function(ObjectRef, reason)
+minetest.register_on_dieplayer(function(player, reason)
 
     if not minetest.settings:get_bool('creative_mode')
-    and ObjectRef:is_player() then
+    and player:is_player() then
 
-        ObjectRef:set_inventory_formspec([[
+        player:set_inventory_formspec([[
             size[8.5,8.5]
 
             list[current_player;auxi;0.75,0.5;1,3;0]

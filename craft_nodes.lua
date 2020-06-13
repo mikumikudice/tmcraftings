@@ -598,13 +598,13 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             fixed = {
 
                 -- Base --
-                {0.5, -0.5, -0.5, -0.5, -0.2, 0.5},
+                {0.5, 0.5 - 12/16, 0.5, -0.5, -0.5, -0.5},
 
                 -- Cross X --
-                {0.3, 0.2, 0.45, -0.3, 0.3, 0.35},
+                {0.5 - 2/16, 0.5 - 3/16, 0.5 - 1/16, -0.5 + 2/16, 0.5 - 5/16, 0.5 - 3/16},
 
                 -- Cross Y --
-                {0.05, -0.2, 0.45, -0.05, 0.5, 0.35},
+                {0.5 - 7/16, 0.5, 0.5 - 1/16, -0.5 + 7/16, 0.5 - 12/16, 0.5 - 3/16},
             },
         },
 
@@ -2620,11 +2620,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             type = "fixed",
             fixed = {
 
-                -- Bottom --
-                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
-
                 -- Stick --
-                {-0.18, ((1 / 16) * 11) - 0.5, -0.18, 0.18, 0.5, 0.18},
+                {0.5 - 5/16, 0.5, 0.5 - 5/16, -0.5 + 5/16, 0.5 - 5/16, -0.5 + 5/16},
+
+                -- Bottom --
+                {0.5, 0.5 - 5/16, 0.5, -0.5, -0.5, -0.5},
             },
         },
 
@@ -2634,6 +2634,9 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             "tmcraftings_silver_block.png" ,
             "tmcraftings_piston_on_bot.png",
         },
+
+        drop = "tmcraftings:piston",
+        paramtype2 = 'facedir',
 
         paramtype = "light",
         sunlight_propagates = true,
@@ -2655,10 +2658,13 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             fixed = {
 
                 -- Head --
-                {0.5, 0.5, 0.5, -0.5, (1 - (0.5 / 2)) - 0.5, -0.5},
+                {0.5, 0.5, 0.5, -0.5, 0.5 - 4/16, -0.5},
 
-                -- Stick --
-                {-0.18, (1 - (0.5 / 2)) - 0.5, -0.18, 0.18, -0.5, 0.18},
+                -- Stick top --
+                {0.5 - 6/16, 0.5 - 4/16, 0.5 - 6/16, -0.5 + 6/16, -0.5 + 4/16, -0.5 + 6/16},
+
+                -- Stick bot --
+                {0.5 - 5/16, -0.5 + 4/16, 0.5 - 5/16, -0.5 + 5/16, -0.5, -0.5 + 5/16},
             },
         },
 
@@ -2728,11 +2734,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             type = "fixed",
             fixed = {
 
-                -- Bottom --
-                {-0.5, -0.5, -0.5, 0.5, ((1 / 16) * 11) - 0.5, 0.5},
-
                 -- Stick --
-                {-0.18, ((1 / 16) * 11) - 0.5, -0.18, 0.18, 0.5, 0.18},
+                {0.5 - 5/16, 0.5, 0.5 - 5/16, -0.5 + 5/16, 0.5 - 5/16, -0.5 + 5/16},
+
+                -- Bottom --
+                {0.5, 0.5 - 5/16, 0.5, -0.5, -0.5, -0.5},
             },
         },
 
@@ -2743,8 +2749,11 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             "tmcraftings_piston_on_bot.png",
         },
 
-        drop = "tmcraftings:glue_piston",
+        drop = "tmcraftings:piston",
         paramtype2 = 'facedir',
+
+        paramtype = "light",
+        sunlight_propagates = true,
 
         is_ground_content = false,
         groups = {cracky = 5, not_in_creative_inventory = 1},
@@ -2763,10 +2772,13 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             fixed = {
 
                 -- Head --
-                {0.5, 0.5, 0.5, -0.5, (1 - (0.5 / 2)) - 0.5, -0.5},
+                {0.5, 0.5, 0.5, -0.5, 0.5 - 4/16, -0.5},
 
-                -- Stick --
-                {-0.18, (1 - (0.5 / 2)) - 0.5, -0.18, 0.18, -0.5, 0.18},
+                -- Stick top --
+                {0.5 - 6/16, 0.5 - 4/16, 0.5 - 6/16, -0.5 + 6/16, -0.5 + 4/16, -0.5 + 6/16},
+
+                -- Stick bot --
+                {0.5 - 5/16, -0.5 + 4/16, 0.5 - 5/16, -0.5 + 5/16, -0.5, -0.5 + 5/16},
             },
         },
 
@@ -2777,7 +2789,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             "tmcraftings_piston_on_top.png"   ,
         },
 
-        drop = "tmcraftings:glue_piston",
+        drop = "tmcraftings:piston",
         paramtype2 = 'facedir',
 
         paramtype = "light",

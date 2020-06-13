@@ -236,7 +236,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         })
 
         -- Full stone sword --
-        minetest.register_tool("tmcraftings:fullstone_sword", {
+        minetest.register_tool('tmcraftings:fullstone_sword', {
 
             description = "Full Stone Sword",
             inventory_image = "tmcraftings_fullstone_sword.png",
@@ -251,7 +251,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
                     snappy = {
                         
                         times = {[2] = 1.4, [3] = 0.4},
-                        uses = 35,
+                        uses = 25,
                         maxlevel = 1
                     },
                 },
@@ -265,12 +265,12 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
         minetest.register_craft({
 
-            output = 'tmcraftings:fullstone_sword',
+            output = "tmcraftings:fullstone_sword",
             recipe = {
                 
-                {'default:cobble'},
-                {'default:cobble'},
-                {'tmcraftings:stone_stick'},
+                {"default:cobble"},
+                {"default:cobble"},
+                {"tmcraftings:stone_stick"},
             },
         })
 
@@ -394,7 +394,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         })
 
         -- Iron sword --
-        minetest.register_tool("tmcraftings:iron_sword", {
+        minetest.register_tool('tmcraftings:iron_sword', {
 
             description = "Iron Sword",
             inventory_image = "tmcraftings_iron_sword.png",
@@ -408,7 +408,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
                     snappy = {
                         
-                        times = {[1] = 2.5, [2] = 1.20, [3] = 0.35},
+                        times = {[2] = 1.2, [3] = 0.3},
                         uses = 30,
                         maxlevel = 2
                     },
@@ -423,12 +423,12 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
         minetest.register_craft({
 
-            output = 'tmcraftings:iron_sword',
+            output = "tmcraftings:iron_sword",
             recipe = {
                 
-                {'tmcraftings:iron'},
-                {'tmcraftings:iron'},
-                {'default:stick'},
+                {"tmcraftings:iron"},
+                {"tmcraftings:iron"},
+                {"default:stick"},
             },
         })
 
@@ -551,7 +551,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         })
 
         -- Tungsten sword --
-        minetest.register_tool("tmcraftings:tungsten_sword", {
+        minetest.register_tool('tmcraftings:tungsten_sword', {
 
             description = "Tungsten Sword",
             inventory_image = "tmcraftings_tungsten_sword.png",
@@ -565,7 +565,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
                     snappy = {
 
-                        times = {[1] = 2.0, [2] = 1.00, [3] = 0.35},
+                        times = {[2] = 1.0, [3] = 0.3},
                         uses = 40,
                         maxlevel = 3
                     },
@@ -580,12 +580,12 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
         minetest.register_craft({
 
-            output = 'tmcraftings:tungsten_sword',
+            output = "tmcraftings:tungsten_sword",
             recipe = {
                 
-                {'tmcraftings:tungsten'},
-                {'tmcraftings:tungsten'},
-                {'default:stick'},
+                {"tmcraftings:tungsten"},
+                {"tmcraftings:tungsten"},
+                {"default:stick"},
             },
         })
 
@@ -723,7 +723,7 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
                     snappy = {
                         
-                        times={[1] = 1.90, [2] = 0.90, [3] = 0.30},
+                        times = {[2] = 0.8, [3] = 0.2},
                         uses = 50,
                         maxlevel = 3
                     },
@@ -738,12 +738,12 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
 
         minetest.register_craft({
 
-            output = 'tmcraftings:titanium_sword',
+            output = "tmcraftings:titanium_sword",
             recipe = {
                 
-                {'tmcraftings:titanium'},
-                {'tmcraftings:titanium'},
-                {'default:stick'},
+                {"tmcraftings:titanium"},
+                {"tmcraftings:titanium"},
+                {"default:stick"},
             },
         })
 
