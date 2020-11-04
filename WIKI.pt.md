@@ -7,12 +7,12 @@ e coloque no diretório de mods do jogo. [[Ajuda para instalação.](https://dev
 ### AVISO: Ative o mod nas configurações de mundo antes de abri-lo pela primeira vez.<br/>Caso contrário, a geração de mundo e de loot não serão efetuadas.
 
 ## Mineração
-O mod substitui todos os minérios padrão do jogo, exceto o carvão. A ordem de capacidade de mineração é essa:
+O mod substitui todos os minérios padrão do jogo, exceto o carvão. A ordem de capacidade de mineração é esta:
 
     madeira < pedra < ferro < tungstênio < titânio < obsidiana
                               prata/ouro < cristal mágico/rubi
                               
-Onde a linha mais baixa são minérios apenas de criação, não geram equipamentos ou armaduras.
+Na linha mais baixa estão os minérios de "apenas de criação", os quais não geram equipamentos ou armaduras.
 
 ## Inventário
 Foram adicionados 3 novos slots ao inventário, a Safe Bar, esses itens não serão perdidos ao morrer.<br/><br/>
@@ -22,7 +22,7 @@ Foram adicionados 3 novos slots ao inventário, a Safe Bar, esses itens não ser
 Para criar uma ferramenta use as mesmas receitas que a do jogo padrão (picareta, pá, machado e espada). As enchadas não foram substituidas.
 
 ### Armaduras
-As armaduras são feitas de Armor Pieces, ou Peças de armadura, são feitas com a seguinte receita:
+As armaduras são feitas de Armor Pieces, ou Peças de armadura. Essas são feitas com a seguinte receita:
 
     ingot ingot ingot
     ingot _____ ingot
@@ -80,7 +80,7 @@ Receita:
     iron ____ iron
 
 # Itens Mágicos
-Todos precisam de cristal mágico/poeira mágica e prata/ferro.
+Todos precisam de cristal mágico ou poeira mágica e prata/ferro.
 
 ## Lógica dos circuitos
 Os blocos mágicos que exercem alguma função mágica precisam ser carregados por um dispersor mágico ou poste mágioco,
@@ -243,8 +243,8 @@ Receita:
     _Fe/Ag__ _engine_ _Fe/Ag__
     _Fe/Ag__ _Fe/Ag__ _Fe/Ag__    
 
-## Fornálha Mágica
-Cozinha itens sem combustível.<br/>
+## Fornalha Mágica
+Cozinha itens sem combustível, mas precisa ser energizado.<br/>
 Receita:
 
     _Fe/Ag__ _Fe/Ag__ _Fe/Ag__
