@@ -1,5 +1,5 @@
 ## Too Many Craftings [tmcraftings]
-Copyright (C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
+Copyright(C) 2020 Pixet Bits (mateusmoraisdias3@gmail.com)
 
 Current version: 2.6
 
@@ -28,6 +28,6 @@ Copyright(c) 2020 PixetBits<br/>
 see `license.txt` for details.<br/>
 
 Media (textures):<br/>
-Copyright(c) 2020 PixetBits;<br/>
-Copyright (C) 2010-2018 Various Minetest developers and contributors*; CC-BY-SA 3.0<br/>
+Copyright(C) 2020 PixetBits;<br/>
+Copyright(C) 2010-2018 Various Minetest developers and contributors*; CC-BY-SA 3.0<br/>
 see `license.txt` for details.
