@@ -2,7 +2,6 @@
 
     -- Dungeon Loot --
     local loot = {
-                    
         'tmcraftings:iron', 'tmcraftings:iron_pick', 'tmcraftings:iron_shovel'  ,
         'default:cobble'  , 'default:coal_lump'    , 'tmcraftings:magic_crystal',
         'default:wood'    , 'default:stick'        , 'default:pick_wood'        ,
@@ -14,7 +13,6 @@
     -- Replace default function to add an callback --
     core.add_node =
     function(pos, node)
-        
         -- Store chests' data --
         if node.name == 'default:chest' then
 
@@ -23,14 +21,12 @@
 
                 ['found'] = true,
                 ['pos']   = {
-                
                     ['x'] = pos.x,
                     ['y'] = pos.y,
                     ['z'] = pos.z,
                 }
             })
         end
-
         minetest.set_node(pos, node)
     end
 
@@ -41,29 +37,30 @@
 
     function gen_loot()
 
-        for i, v in pairs(found_chest) do
+        for indx, chst in pairs(found_chest) do
 
-            if v.found then
+            if chst.found then
 
-                local meta = minetest.get_meta(v.pos)
+                local meta = minetest.get_meta(chst.pos)
                 local inv = meta:get_inventory()
 
                 meta:set_string('infotext', 'loot')
 
                 -- Disable trigger --
-                found_chest[i] = nil
-                
+                found_chest[indx] = nil
+
                 -- Get max slot index --
                 local size = inv:get_size('main')
 
                 -- Clear inventory --
                 inv:set_list('main', {})
 
-                local val1, val2, val3 = math.abs(v.pos.x), math.abs(v.pos.y), math.abs(v.pos.z)
+                local val1, val2, val3 =
+                math.abs(chst.pos.x),math.abs(chst.pos.y), math.abs(chst.pos.z)
+
                 math.randomseed(val1 + val2 + val3)
 
                 local itms = {
-
                     [math.random(0, size)] = loot[val3 % (#loot + 1)],
                     [math.random(0, size)] = loot[val2 % (#loot + 1)],
                     [math.random(0, size)] = loot[val1 % (#loot + 1)],
@@ -79,19 +76,15 @@
 
                     -- Add more items --
                     if (
-
                         minetest.get_item_group(v, 'pickaxe') ~= 0 and
                         minetest.get_item_group(v, 'shovel' ) ~= 0 and
                         minetest.get_item_group(v, 'axe'    ) ~= 0 and
                         minetest.get_item_group(v, 'sword'  ) ~= 0
 
                     ) then d_itm:set_count(math.random(1, 5))
-                    
                     -- Fix duplicated tools bug --
                     else
-                        
                         d_itm:set_count(1)
-                        
                         -- Add random wearing --
                         d_itm:add_wear(math.random(0.20 * 65535, 0.75 * 65535))
                     end
@@ -110,12 +103,11 @@
 chests = {}
 
 function can_dig(pos)
-    
     local meta = minetest.get_meta(pos)
     local inv  = meta:get_inventory()
 
     local out = inv:is_empty('main')
-    
+
     if out ~= nil then return out
     else return true end
 end
@@ -127,7 +119,6 @@ function can_opn(pos)
     local def = minetest.registered_nodes[minetest.get_node(above).name]
 
     if def and (
-
         def.drawtype == "airlike" or
         def.drawtype == "signlike" or
         def.drawtype == "torchlike" or
@@ -135,27 +126,21 @@ function can_opn(pos)
         (def.drawtype == "nodebox" and def.paramtype2 == "wallmounted")
 
     ) then return true end
-    
+
     return false
 end
 
--- Based on original code --
+-- based on original code --
 function close_chest(sound)
-
     minetest.sound_play(sound or 'default_chest_close', {
-
         gain = 0.3,
         pos  = pos,
         max_hear_distance = 10
-
     }, true)
 
     for i, v in pairs(chests) do
-        
         if v then
-            
             minetest.after(0.2, function()
-                
                 s_node(i, v)
                 chests[i] = nil
             end)
@@ -163,16 +148,16 @@ function close_chest(sound)
     end
 end
 
--- On close gui --
+-- on close gui --
 minetest.register_on_player_receive_fields(
 function(player, formname, fields)
 
     if formname == 'tmcraftings:chestformspec' then
 
         close_chest()
-    
+
     elseif formname:sub(1, 17) == 'tmcraftings:chest' then
-        
+
         close_chest('doors_steel_door_close')
     end
 end)

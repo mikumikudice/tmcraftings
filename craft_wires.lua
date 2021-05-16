@@ -37,37 +37,37 @@ function eletronics.every_tick()
         end
 
         -- Wire behaviour --
-        if minetest.get_node_group(node.name, 'wire') ~= 0 then
+        if minetest.get_item_group(node.name, 'wire') ~= 0 then
 
             eletronics.wires_behaviour(pos, node)
         end
 
         -- Power Delivery --
-        if minetest.get_node_group(node.name, 'pwr_deliver') ~= 0 then
+        if minetest.get_item_group(node.name, 'pwr_deliver') ~= 0 then
 
             eletronics.get_source(pos, node)
         end
 
         -- Magic Gate --
-        if minetest.get_node_group(node.name, 'mgate') ~= 0 then
+        if minetest.get_item_group(node.name, 'mgate') ~= 0 then
 
             eletronics.gate(pos, node)
         end
 
         -- Thinker --
-        if minetest.get_node_group(node.name, 'thinker') ~= 0 then
+        if minetest.get_item_group(node.name, 'thinker') ~= 0 then
 
             eletronics.thinker(pos, node)
         end
 
         -- Inverser --
-        if minetest.get_node_group(node.name, 'inverser') ~= 0 then
+        if minetest.get_item_group(node.name, 'inverser') ~= 0 then
 
             eletronics.inverser(pos, node)
         end
 
         -- Solar panel --
-        if minetest.get_node_group(node.name, 'solar_panel') ~= 0 then
+        if minetest.get_item_group(node.name, 'solar_panel') ~= 0 then
 
             eletronics.solar_bahaviour(pos, node)
         end
@@ -79,28 +79,28 @@ function eletronics.every_tick()
             eletronics.piston_behaviour(pos, node)
         end
 
-        -- Turn off piston --
+        -- turn off piston --
         if node.name == "tmcraftings:piston_bot" then
 
             if not minetest.find_node_near(pos, 1, "group:deliver") then
 
                 local pdir      = minetest.facedir_to_pos(node.param2)
-                local self_part = sub_pos(pos, pdir)
+                local self_part = sum_pos(pos, pdir)
                 
                 s_node(pos, 'tmcraftings:piston')
                 minetest.set_node(self_part, {name = 'air'})
             end
         end
 
-        -- Turn off (Glue) --
+        -- turn off (glue) --
         if node.name == "tmcraftings:glue_piston_bot" then
-            
+
             if not minetest.find_node_near(pos, 1, "group:deliver") then
 
                 local pdir   = minetest.facedir_to_pos(node.param2)
                 local ps_pos = sum_pos(pos, pdir)
                 local ab_pos = sum_pos(ps_pos, pdir)
-                
+
                 s_node(pos, 'tmcraftings:glue_piston')
 
                 local pushed = minetest.get_node(ab_pos)
@@ -142,39 +142,38 @@ end
 
 --# ABMs ---------------------------------------------------#--
 
-    -- Turn on --
+    -- turn on --
     minetest.register_abm({
 
         nodenames = eletronics.devices,
         interval  = 1,
         chance    = 1,
-        
+
         action =
         function(pos, node)
-            
+
             if minetest.find_node_near(pos, 2, "group:deliver") then
-            
+
                 if node.name:sub(-3) ~= '_on' then
-                
+
                     s_node(pos, node.name .. '_on')
                 end
-            
             else s_node(pos, node.name:gsub('_on', '')) end
         end
     })
 
-    --# Pistons --------------------------------------------#--
+    --# pistons --------------------------------------------#--
 
-        -- Push node --
+        -- push node --
         function eletronics.piston_behaviour(pos, node)
-            
+
             if minetest.find_node_near(pos, 1, "group:deliver") then
 
-                local pdir   = minetest.facedir_to_pos(node.param2)
+                local pdir = minetest.facedir_to_pos(node.param2)
 
                 if not pdir then
-                    
-                    minetest.chat_send_all('an unexpected error occurred, please report the PPB ' .. (math.floor(node.param2 / 4)) .. ' error')
+
+                    minetest.log('an unexpected error occurred, please report the PPB ' .. (math.floor(node.param2 / 4)) .. ' error')
                     return nil
                 end
 
@@ -194,7 +193,7 @@ end
                         local pushed_meta = minetest.get_meta(ab_pos)
                         pushed_meta:from_table(topush_meta:to_table())
                     end
-                    
+
                     s_node(pos, node.name .. '_bot')
 
                     local paste_rotation = minetest.get_node(pos)
@@ -204,28 +203,26 @@ end
             end
         end
 
-        -- Break itself --
+        -- break itself --
         function eletronics.break_brother(pos, node)
 
             local pdir = minetest.facedir_to_pos(node.param2)
             node = node.name
 
-            -- Top --
+            -- top --
             if node:sub(-4) == '_top' then
 
                 local npos = sub_pos(pos, pdir)
                 if minetest.get_node(npos).name:sub(-4) == '_bot' then
-                
+
                     minetest.remove_node(npos)
                 end
             end
-
-            -- Bot --
+            -- bot --
             if node:sub(-4) == '_bot' then
-                
                 local npos = sum_pos(pos, pdir)
                 if minetest.get_node(npos).name:sub(-4) == '_top' then
-                
+
                     minetest.remove_node(npos)
                 end
             end
@@ -234,15 +231,14 @@ end
 --# Behaviours ---------------------------------------------#--
 
     function eletronics.meta_to_pos(str)
-        
-        -- String mattch format --
+        -- string mattch format --
         if not str:match('%-*(%d+),%-*(%d+),%-*(%d+)') then return end
 
-        -- Get commas indexes --
+        -- get commas indexes --
         local fdx = str:find(',', 1)
         local ldx = str:find(',', fdx + 1)
 
-        -- Get values --
+        -- get values --
         local x = str:sub(1, fdx - 1)
         local y = str:sub(fdx + 1, ldx - 1)
         local z = str:sub(ldx + 1)
@@ -251,7 +247,7 @@ end
     end
 
     function eletronics.get_near(pos, group)
-        
+
         local la = {['x'] = pos.x + 1, ['y'] = pos.y + 1, ['z'] = pos.z}
         local fa = {['x'] = pos.x, ['y'] = pos.y + 1, ['z'] = pos.z + 1}
         local ra = {['x'] = pos.x - 1, ['y'] = pos.y + 1, ['z'] = pos.z}
@@ -270,12 +266,12 @@ end
         local all_near = {la, fa, ra, ba, lm, fm, rm, bm, lb, fb, rb, bb}
 
         local match = {}
-        
+
         for _, p in pairs(all_near) do
-            
+
             local node = minetest.get_node(p).name
             if minetest.get_node_group(node, group) ~= 0 then
-        
+
                 table.insert(match, p)
             end
         end

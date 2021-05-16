@@ -84,10 +84,10 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         nodenames = {"default:stone_with_iron"},
         interval  = 1,
         chance    = 1,
-        
+
         action =
         function(pos)
-            
+
             minetest.set_node(pos, {name = "tmcraftings:stone_with_iron"})
         end
     })
@@ -907,8 +907,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         on_rightclick =
         function(pos, node, clicker)
-            
-            -- Trigger loot --
+            -- trigger loot --
             minetest.get_meta(pos):set_string('open', 'true')
 
             if can_opn(pos) then
@@ -920,7 +919,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                     max_hear_distance = 10
 
                 }, true)
-                
+
                 chests[pos] = 'default:chest'
                 s_node(pos, 'default:chest_open')
 
@@ -929,7 +928,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                     minetest.show_formspec,
 					clicker:get_player_name(),
                     'tmcraftings:chestformspec',
-                    
+
                     get_gui('defchest', _, _,
                         'nodemeta:' .. pos.x .. "," .. pos.y .. "," .. pos.z .. ';main')
                 )
@@ -938,7 +937,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
     })
 
     minetest.override_item('default:chest_open', {
-        
+
         drawtype = "mesh",
         mesh = "chest_open.obj",
 
@@ -1184,8 +1183,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-            
             "tmcraftings_anvil_top.png" , "tmcraftings_anvil_bot.png" ,
             "tmcraftings_anvil_side.png^[transformFX", "tmcraftings_anvil_side.png",
             "tmcraftings_anvil_back.png", "tmcraftings_anvil_frnt.png",
@@ -1353,9 +1352,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 --# Enchanted Chest ----------------------------------------#--
 
     minetest.register_node('tmcraftings:echest', {
-                
         description = "Enchanted Chest",
-        
+
         tiles = {
 
             "tmcraftings_echest_top.png" , "tmcraftings_echest_bot.png" ,
@@ -1375,7 +1373,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
     --# Behaviour scope ------------------------------------#--
 
-        on_construct = 
+        on_construct =
         function(pos)
 
             chests[pos] = false
@@ -1383,7 +1381,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         on_rightclick =
         function(pos, node, clicker)
-            
             if can_opn(pos) then
 
                 minetest.sound_play('doors_steel_door_open', {
@@ -1393,7 +1390,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                     max_hear_distance = 10
 
                 }, true)
-                
+
                 chests[pos] = 'tmcraftings:echest'
                 s_node(pos, 'tmcraftings:echest_open')
 
@@ -1402,7 +1399,7 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
                     minetest.show_formspec,
                     clicker:get_player_name(),
                     'tmcraftings:chestformspec_enchanted',
-                    
+
                     get_gui('defchest', _, _, 'current_player;chest')
                 )
             end
@@ -1639,8 +1636,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_magic_boiler_top.png" , "tmcraftings_mfurnace_bot.png"     ,
             "tmcraftings_magic_boiler_side.png", "tmcraftings_magic_boiler_side.png",
             "tmcraftings_magic_boiler_side.png", "tmcraftings_magic_boiler.png"     ,
@@ -1846,8 +1843,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             }
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_post_top.png",
             "tmcraftings_post_top.png",
             "tmcraftings_post.png"    ,
@@ -1855,7 +1852,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
 
         paramtype = "light",
         sunlight_propagates = true,
-        is_ground_content = false,
 
         is_ground_content = false,
         groups = {cracky = 5, source = 2, wire = 2, pwr_deliver = 1},
@@ -1881,8 +1877,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             }
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_post_top_on.png",
             "tmcraftings_post_top_on.png",
             "tmcraftings_post_on.png"    ,
@@ -2273,8 +2269,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             }
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             'tmcraftings_solar.png',
             'tmcraftings_silver_block.png^tmcraftings_component.png',
             'tmcraftings_solar_side.png',
@@ -2300,8 +2296,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             }
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             'tmcraftings_solar.png',
             'tmcraftings_silver_block.png^tmcraftings_component.png',
             'tmcraftings_solar_side.png',
@@ -2628,8 +2624,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_silver_block.png^tmcraftings_component.png",
             "tmcraftings_silver_block.png" ,
             "tmcraftings_piston_on_bot.png",
@@ -2668,8 +2664,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_piston_frnt.png"  ,
             "tmcraftings_piston_frnt.png"  ,
             "tmcraftings_piston_on_top.png",
@@ -2707,7 +2703,6 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
         description = "Glue Piston",
 
         tiles = {
-
             'tmcraftings_piston_frnt_glue.png',
             'tmcraftings_silver_block.png'    ,
             'tmcraftings_piston_side.png'     ,
@@ -2742,8 +2737,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_silver_block.png^tmcraftings_component.png",
             "tmcraftings_silver_block.png" ,
             "tmcraftings_piston_on_bot.png",
@@ -2782,8 +2777,8 @@ dofile(minetest.get_modpath("tmcraftings") .. '/craft_furns.lua')
             },
         },
 
+        use_texture_alpha = "clip",
         tiles = {
-
             "tmcraftings_piston_frnt_glue.png",
             "tmcraftings_piston_frnt.png"     ,
             "tmcraftings_piston_on_top.png"   ,

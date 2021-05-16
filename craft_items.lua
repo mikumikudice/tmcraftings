@@ -1149,9 +1149,9 @@ dofile(minetest.get_modpath('tmcraftings') .. '/craft_chest.lua')
         output = "tmcraftings:wcu 8",
         recipe = {
 
-            {"group:tech_material", "tmcraftings:gold"      , "tmcraftings:silver"},
-            {"tmcraftings:gold"   , "tmcraftings:magic_dust", "tmcraftings:gold"  },
-            {"group:tech_material", "tmcraftings:gold"      , "tmcraftings:silver"},
+            {"group:tech_material", "tmcraftings:gold"      , "group:tech_material"},
+            {"tmcraftings:gold"   , "tmcraftings:magic_dust", "tmcraftings:gold"   },
+            {"group:tech_material", "tmcraftings:gold"      , "group:tech_material"},
         }
     })
 
